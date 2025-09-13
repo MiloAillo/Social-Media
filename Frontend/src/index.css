@@ -1,0 +1,7 @@
+@import url('https://fonts.cdnfonts.com/css/inter');
+@import "tailwindcss";
+
+.material-symbols-outlined {
+  font-size: 35px !important;
+  color: white;
+}
