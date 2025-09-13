@@ -1,8 +1,7 @@
 # Social Media
 Originally created as a school assignment and turned to be a full blown project.
 <br>
-This Repo contain a full blown CRUD with Laravel API Service alongside React, a scalable source code in hope to make appliance of new tech such as for security measure easier.
-
+This repo contains a full-blown CRUD application with a Laravel API service and React, designed with scalable source code to make adopting new technologies, such as improved security measures, easier
 ## Tech Stack
 <ol>
   <li>Typescript: Javascript but better</li>
