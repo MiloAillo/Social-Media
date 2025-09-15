@@ -13,7 +13,7 @@ function SettingsPage() {
         <div className="bg-[#222831] w-screen h-screen flex justify-center p-5">
             <div className="w-[600px] flex flex-col gap-5   ">
                 <div className="flex items-center gap-2 text-[#EEEEEE]">
-                    <div className="font-[Inter] font-bold text-3xl">{"<"}</div>
+                    <div onClick={() => window.location.href = "/"} className="font-[Inter] font-bold text-3xl cursor-pointer">{"<"}</div>
                     <p className="font-[Inter] font-bold text-3xl">Settings</p>
                 </div>
                 <div className="flex flex-wrap gap-4 justify-center">
