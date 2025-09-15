@@ -1,4 +1,4 @@
-import type { ReactNode } from "react"
+import { useState, type ReactNode } from "react"
 
 interface SettingsCardProps {
     children: ReactNode
@@ -7,12 +7,15 @@ interface SettingsCardProps {
 }
 
 function SettingsCard({ children, tittle, description }: SettingsCardProps) {
+    const [isOpen, setIsOpen] = useState<boolean>(false)
     return (
-        <div className="flex flex-row items-center gap-2 bg-[#393E46] min-w-60 flex-1 p-2 box-border rounded-lg">
-            <div className="w-10 h-10 flex items-center justify-center">{children}</div>
+        <div onClick={() => setIsOpen(prev => !prev)} className="flex flex-col justify-center gap-2 bg-[#393E46] min-w-60 w-full p-3 box-border rounded-lg">
             <div>
                 <div className="font-[Inter] text-white font-semibold text-xl">{tittle}</div>
                 <div className="font-[Inter] text-white font-light text-md">{description}</div>
+            </div>
+            <div className={`${!isOpen ? "hidden " : ""} w-full`}>
+                {children}
             </div>
         </div>
     )

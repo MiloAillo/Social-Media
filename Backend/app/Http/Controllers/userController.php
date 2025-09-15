@@ -15,10 +15,16 @@ class userController extends Controller
     }
 
     public function createUser(Request $request) {
+        $validated = $request->validate([
+            "username" => ['required', 'string', 'unique:pengguna,username'],
+            "email" => ['required', 'email', 'unique:users,email'],
+            "password" => ['required', 'string', 'min:6'] 
+        ]);
+
         Users::insert([
-            "username"=>$request->username,
-            "email"=>$request->email,
-            "password"=>Hash::make($request->password),
+            "username"=>$validated['username'],
+            "email"=>$validated['email'],
+            "password"=>Hash::make($validated['password']),
         ]);
 
         return response()->json(["status"=>"ok"], 200);

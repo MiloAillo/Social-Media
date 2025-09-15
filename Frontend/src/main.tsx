@@ -1,13 +1,19 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import AccessRoute from './routes/AccessRoute'
 import "./index.css"
 import SettingsRoute from './routes/SettingsRoute'
+import HomeRoute from './routes/HomeRoute'
+import { authLoader } from './loader/auth'
 
 const route = createBrowserRouter([
+  {loader: authLoader, children: [
+    SettingsRoute,
+    HomeRoute,
+  ]},
   AccessRoute,
-  SettingsRoute
+  {path: "*", element: <Navigate to="/access" replace />,},
 ])
 
 createRoot(document.getElementById('root')!).render(

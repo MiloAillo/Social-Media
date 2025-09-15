@@ -27,4 +27,8 @@ class AccessController extends Controller
     public function logout(Request $request) {
         $request->user()->currentAccessToken()->delete();
     }
+
+    public function check(Request $request) {
+        return $request->user();
+    }
 }

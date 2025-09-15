@@ -17,3 +17,4 @@ Route::delete('/user', [userController::class, "deleteUser"]);
 //AccessController
 Route::post('/login', [AccessController::class, "login"]);
 Route::middleware('auth:sanctum')->get('/logout', [AccessController::class, "logout"]);
+Route::middleware('auth:sanctum')->get('/check', [AccessController::class, "check"]);

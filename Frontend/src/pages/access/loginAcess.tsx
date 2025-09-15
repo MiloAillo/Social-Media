@@ -10,11 +10,15 @@ function LoginAccess() {
     const login = async (): Promise<void> => {
         try {
             if (!emailRef.current?.value || !passwordRef.current?.value) return
-            const res = await axios.post('/', {
+            const res = await axios.post('http://127.0.0.1:8000/api/login', {
                 email: emailRef.current?.value,
                 password: passwordRef.current?.value
             })
-            console.log(res)
+            if(res.status === 200) {
+                const data = await res.data
+                window.localStorage.setItem("Authorization", data.token)
+                window.location.href = "/"
+            }
         } catch(err) {
             console.log(err)
             setIsDataWrong(true)
