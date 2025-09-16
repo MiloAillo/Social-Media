@@ -18,17 +18,16 @@ function SettingsPage() {
                 </div>
                 <div className="flex flex-wrap gap-4 justify-center">
                     <SettingsCard tittle="Delete Account" description="Erase your account permanently">
-                        <div className="flex flex-row justify-between items-center p-4 bg-[#222831] rounded-md">
-                            <p className="tracking-wide text-sm text-white font-[Inter]">Are you sure?</p>
-                            <button onClick={logout} className="bg-[#D65A31] font-medium font-[Inter] px-10 py-[2px] border-0 rounded-sm">Log out</button>
-                        </div>
+                        <img src="" alt="" />
                     </SettingsCard>
                     <SettingsCard tittle="Media Quality" description="Change photo and video quality">
                         <img src="" alt="" />
                     </SettingsCard>
                     <SettingsCard tittle="Logout" description="Sign out from all of your devices">
-                        <img src="" alt="" />
-                    </SettingsCard>
+                        <div className="flex flex-row justify-between items-center p-4 bg-[#222831] rounded-md">
+                            <p className="tracking-wide text-sm text-white font-[Inter]">Are you sure?</p>
+                            <button onClick={logout} className="bg-[#D65A31] font-medium font-[Inter] px-10 py-[2px] border-0 rounded-sm">Log out</button>
+                        </div>                    </SettingsCard>
                 </div>
 
             </div>

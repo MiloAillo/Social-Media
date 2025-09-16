@@ -8,7 +8,8 @@ import HomeRoute from './routes/HomeRoute'
 import { authLoader } from './loader/auth'
 
 const route = createBrowserRouter([
-  {loader: authLoader, children: [
+  // loader removed for development purposes
+  {children: [
     SettingsRoute,
     HomeRoute,
   ]},

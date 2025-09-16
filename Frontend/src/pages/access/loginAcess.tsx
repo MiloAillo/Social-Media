@@ -1,11 +1,14 @@
 import axios from "axios"
 import { useRef, useState } from "react"
+    import NProgress from 'nprogress';
+import nProgress from "nprogress";
 
 function LoginAccess() {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
 
     const [isDataWrong, setIsDataWrong] = useState<boolean>(false)
+
 
     const login = async (): Promise<void> => {
         try {
@@ -14,6 +17,7 @@ function LoginAccess() {
                 email: emailRef.current?.value,
                 password: passwordRef.current?.value
             })
+            nProgress.start()
             if(res.status === 200) {
                 const data = await res.data
                 window.localStorage.setItem("Authorization", data.token)
@@ -23,6 +27,7 @@ function LoginAccess() {
             console.log(err)
             setIsDataWrong(true)
         }
+        NProgress.done()
     }
     
     return (
