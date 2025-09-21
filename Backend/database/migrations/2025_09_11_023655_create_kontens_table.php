@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('konten', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('userId');
             $table->foreign('userId')->references('id')->on('pengguna');
             $table->string('tittle', 200);
             $table->string('content', 2256);
-            $table->text('image')->nullable();
+            $table->json('images')->nullable();
         });
     }
 

@@ -12,6 +12,7 @@ class konten extends Model
         "tittle",
         "content",
         "image",
+        "userId"
     ];
 
     protected $hidden = [
@@ -21,5 +22,7 @@ class konten extends Model
         "updated_at",
     ];
 
-
+    protected $casts = [
+        "images" => "array"
+    ];
 }
