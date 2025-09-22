@@ -11,7 +11,7 @@ class konten extends Model
     protected $fillable = [
         "tittle",
         "content",
-        "image",
+        "images",
         "userId"
     ];
 
