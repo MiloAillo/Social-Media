@@ -9,6 +9,7 @@ class konten extends Model
     protected $table = "konten";
 
     protected $fillable = [
+        "id",
         "tittle",
         "content",
         "images",
@@ -16,7 +17,6 @@ class konten extends Model
     ];
 
     protected $hidden = [
-        "id",
         "userId",
         "created_at",
         "updated_at",
@@ -25,4 +25,8 @@ class konten extends Model
     protected $casts = [
         "images" => "array"
     ];
+
+    public function pengguna() {
+        return $this->belongsTo(Users::class, "userId");
+    }
 }

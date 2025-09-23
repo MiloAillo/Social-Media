@@ -21,5 +21,6 @@ Route::middleware('auth:sanctum')->get('/logout', [AccessController::class, "log
 Route::middleware('auth:sanctum')->get('/check', [AccessController::class, "check"]);
 
 //KontenController
-Route::middleware('auth:sanctum')->get('/post', [KontenController::class,'postKonten']);
-Route::middleware('auth:sanctum')->post('/post', [KontenController::class,'postKonten']);                                  // kurang get post dan post posts, frontend post up to 3 image, backend terima image, parse path nya dan masukkin path ke db encoded json, image masuk storage, get nya return link image nya.
+Route::middleware('auth:sanctum')->get('/post', [KontenController::class,'getKonten']);
+Route::middleware('auth:sanctum')->post('/post', [KontenController::class,'postKonten']); 
+Route::middleware('auth:sanctum')->delete('/post', [KontenController::class, "deleteKonten"]);                                 // kurang get post dan post posts, frontend post up to 3 image, backend terima image, parse path nya dan masukkin path ke db encoded json, image masuk storage, get nya return link image nya.
