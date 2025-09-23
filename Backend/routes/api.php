@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 // UserController
 Route::middleware('auth:sanctum')->get('/users', [userController::class, 'getUsers']);
 Route::post('/user', [userController::class, "createUser"]);
-Route::patch('/user', [userController::class, "updateUser"]);
+Route::middleware('auth:sanctum')->post('/editprofile', [userController::class, "updateUser"]);
 Route::delete('/user', [userController::class, "deleteUser"]);
 
 //AccessController

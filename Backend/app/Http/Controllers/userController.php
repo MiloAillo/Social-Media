@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+use function PHPUnit\Framework\isArray;
 
 class userController extends Controller
 {
@@ -16,7 +20,7 @@ class userController extends Controller
 
     public function createUser(Request $request) {
         $validated = $request->validate([
-            "username" => ['required', 'string', 'unique:pengguna,username'],
+            "username" => ['required', 'string', "min:6" , 'unique:pengguna,username'],
             "email" => ['required', 'email', 'unique:users,email'],
             "password" => ['required', 'string', 'min:6'] 
         ]);
@@ -38,8 +42,30 @@ class userController extends Controller
     }
 
     public function updateUser(Request $request) {
-        Users::where("id", $request->id)->update($request->all());
+        $validated = $request->validate([
+            "username" => ["min:6", "lowercase", "regex:/^[a-z0-9_-]+$/", "unique:pengguna,username"], 
+            "name" => ["string", "min:6", "not_regex:/^[0-9_-]+$/"],
+            "image" => ["file", "mimes:jpg,png,jpeg", "max:2048"]  
+        ]);
 
-        return response()->json(["status"=>"ok"], 200);
+        $user = $request->user();
+        $hasImage = false;
+        $filteredRequest = $request->except("image");
+
+        if($request->hasFile("image")) {
+            $hasImage = true;
+            $image = $request->file("image");
+
+            $extension = $image->getClientOriginalExtension();
+            $filename = Str::uuid() . "pp" . "." . $extension;
+            $path = $image->storeAs("pfp", $filename, "public");
+            $link = url(Storage::url($path));
+
+            $request->offsetUnset("image");
+            $filteredRequest["photo"] = $link;
+        }
+        
+        Users::query()->where("id", $user->id)->update($filteredRequest);
+        return response()->json(["status"=>"success"], 200);
     }
 }
