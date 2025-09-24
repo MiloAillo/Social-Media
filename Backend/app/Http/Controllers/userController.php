@@ -68,4 +68,12 @@ class userController extends Controller
         Users::query()->where("id", $user->id)->update($filteredRequest);
         return response()->json(["status"=>"success"], 200);
     }
+
+    public function searchUsers(Request $request) {
+        $db = Users::query()->where("username", "like", "%".$request->users.'%')
+                        ->orWhere('name', "like", "%".$request->users.'%')
+                        ->get();
+
+        return response()->json($db, 200);
+    }
 }

@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Route;
 
 // UserController
 Route::middleware('auth:sanctum')->get('/users', [userController::class, 'getUsers']);
-Route::post('/user', [userController::class, "createUser"]);
 Route::middleware('auth:sanctum')->post('/editprofile', [userController::class, "updateUser"]);
+Route::middleware('auth:sanctum')->post('/search', [userController::class, 'searchUsers']);
+Route::post('/user', [userController::class, "createUser"]);
 Route::delete('/user', [userController::class, "deleteUser"]);
 
 //AccessController
