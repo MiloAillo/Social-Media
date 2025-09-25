@@ -45,7 +45,8 @@ class userController extends Controller
         $validated = $request->validate([
             "username" => ["min:6", "lowercase", "regex:/^[a-z0-9_-]+$/", "unique:pengguna,username"], 
             "name" => ["string", "min:6", "not_regex:/^[0-9_-]+$/"],
-            "image" => ["file", "mimes:jpg,png,jpeg", "max:2048"]  
+            "image" => ["file", "mimes:jpg,png,jpeg", "max:2048"]  ,
+            "description" => ["string"]
         ]);
 
         $user = $request->user();

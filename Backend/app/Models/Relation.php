@@ -4,13 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class relation extends Model
+class Relation extends Model
 {
     protected $table = "relations";
 
     protected $fillable = [
         "follower",
         "following"
+    ];
+
+    protected $hidden = [
+        "created_at",
+        "updated_at"
     ];
 
     public function followerPengguna() {
