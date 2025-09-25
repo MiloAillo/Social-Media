@@ -12,13 +12,13 @@ class Users extends Authenticatable
     protected $table = 'pengguna';
 
     protected $fillable = [
-        'id',
-        'username',
-        'email',
-        'password',
-        'name',
-        'photo',
-        'description',
+        'id', // auto added
+        'username', // editable G:1
+        'email', // future authentication
+        'password', // future authentication
+        'name', // editable G:1
+        'photo', // editable G:2
+        'description', // editable G:1
     ];
 
     protected $hidden = [

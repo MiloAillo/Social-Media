@@ -21,7 +21,7 @@ class KontenController extends Controller
         $filespath = [];
         $hasImage = false;
 
-        if($request->hasFile("images")) {
+        if($images) {
             if(count($images) > 3) {
                 return response()->json(["status" => "error", "message"=> "only 3 images allowed per post"],400);
             }
@@ -62,10 +62,21 @@ class KontenController extends Controller
         ]);
 
         $user = $request->user();
+        $post = Konten::where("id", $request->kontenId)->where("userId", $user->id)->first();
 
-        $post = Konten::where("id", $request->kontenId)->where("userId", $user->id)->FirstOrFail();
+        if(!$post) {
+            return response(["status"=> "error","message"=> "no konten found"],400);
+        }
+
+        if($post->images) {
+            $images = $post->images;
+            foreach($images as $image) {
+                $imagePath = Str::replace(url('storage')."/", "", $image);
+                Storage::disk('public')->delete($imagePath);
+            }
+        }
         $post->delete();
 
-        return response(["status"=> "success","message"=> "Konten deleted"],200);
+        return response(["status"=> "success","message"=> "Konten deleted", "test" => $post],200);
     }
 }

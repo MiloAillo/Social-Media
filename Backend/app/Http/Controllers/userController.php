@@ -45,7 +45,8 @@ class userController extends Controller
         $validated = $request->validate([
             "username" => ["min:6", "lowercase", "regex:/^[a-z0-9_-]+$/", "unique:pengguna,username"], 
             "name" => ["string", "min:6", "not_regex:/^[0-9_-]+$/"],
-            "image" => ["file", "mimes:jpg,png,jpeg", "max:2048"]  
+            "image" => ["file", "mimes:jpg,png,jpeg", "max:2048"]  ,
+            "description" => ["string"]
         ]);
 
         $user = $request->user();
@@ -67,5 +68,13 @@ class userController extends Controller
         
         Users::query()->where("id", $user->id)->update($filteredRequest);
         return response()->json(["status"=>"success"], 200);
+    }
+
+    public function searchUsers(Request $request) {
+        $db = Users::query()->where("username", "like", "%".$request->users.'%')
+                        ->orWhere('name', "like", "%".$request->users.'%')
+                        ->get();
+
+        return response()->json($db, 200);
     }
 }
