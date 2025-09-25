@@ -45,29 +45,36 @@ class userController extends Controller
         $validated = $request->validate([
             "username" => ["min:6", "lowercase", "regex:/^[a-z0-9_-]+$/", "unique:pengguna,username"], 
             "name" => ["string", "min:6", "not_regex:/^[0-9_-]+$/"],
-            "image" => ["file", "mimes:jpg,png,jpeg", "max:2048"]  ,
             "description" => ["string"]
         ]);
 
         $user = $request->user();
-        $hasImage = false;
-        $filteredRequest = $request->except("image");
+        
+        Users::query()->where("id", $user->id)->update($request->all());
+        return response()->json(["status"=>"success"], 200);
+    }
 
-        if($request->hasFile("image")) {
-            $hasImage = true;
-            $image = $request->file("image");
+    public function updatePhoto(Request $request) {
+        $validated = $request->validate([
+            "image" => ["required", "mimes:jpg,png,jpeg", "max:2048"]
+        ]);
 
-            $extension = $image->getClientOriginalExtension();
-            $filename = Str::uuid() . "pp" . "." . $extension;
-            $path = $image->storeAs("pfp", $filename, "public");
-            $link = url(Storage::url($path));
+        $user = $request->user();
+        $image = $request->file('image');
+        $filename = Str::uuid().'.'.$image->getClientOriginalExtension();
 
-            $request->offsetUnset("image");
-            $filteredRequest["photo"] = $link;
+        $oldImage = Users::query()->where('id', $user->id)->value('photo');
+        if($oldImage) {
+            $filteredUrl = Str::replace(url('storage')."/", "", $oldImage);
+            Storage::disk('public')->delete($filteredUrl);
         }
         
-        Users::query()->where("id", $user->id)->update($filteredRequest);
-        return response()->json(["status"=>"success"], 200);
+        $path = $image->storeAs('pfp', $filename, "public");
+        $url = url(Storage::url($path));
+
+        Users::query()->where('id', $user->id)->update(["photo" => $url]);
+
+        return response()->json(["status" => "success", "message" => $filteredUrl], 200);
     }
 
     public function searchUsers(Request $request) {
