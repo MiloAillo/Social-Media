@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('userId');
             $table->foreign('userId')->references('id')->on('pengguna');
             $table->string('tittle', 200);
-            $table->string('content', 2256);
+            $table->string('content', 1256);
             $table->json('images')->nullable();
         });
     }

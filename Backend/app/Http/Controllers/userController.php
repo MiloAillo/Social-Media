@@ -20,8 +20,8 @@ class userController extends Controller
 
     public function createUser(Request $request) {
         $validated = $request->validate([
-            "username" => ['required', 'string', "min:6" , 'unique:pengguna,username'],
-            "email" => ['required', 'email', 'unique:users,email'],
+            "username" => ['required', 'string', "min:6", "max:100", "lowercase", "regex:/^[a-z0-9_-]+$/", 'unique:pengguna,username'],
+            "email" => ['required', "max;100", 'email', 'unique:users,email'],
             "password" => ['required', 'string', 'min:6'] 
         ]);
 
@@ -43,34 +43,45 @@ class userController extends Controller
 
     public function updateUser(Request $request) {
         $validated = $request->validate([
-            "username" => ["min:6", "lowercase", "regex:/^[a-z0-9_-]+$/", "unique:pengguna,username"], 
-            "name" => ["string", "min:6", "not_regex:/^[0-9_-]+$/"],
-            "image" => ["file", "mimes:jpg,png,jpeg", "max:2048"]  ,
-            "description" => ["string"]
+            "username" => ["string", "min:6", "max:100", "lowercase", "regex:/^[a-z0-9_-]+$/", "unique:pengguna,username"], 
+            "name" => ["string", "min:6", "max:100", "regex:/^[a-zA-Z ]+$/"],
+            "description" => ["string", "max:150"]
         ]);
 
         $user = $request->user();
-        $hasImage = false;
-        $filteredRequest = $request->except("image");
-
-        if($request->hasFile("image")) {
-            $hasImage = true;
-            $image = $request->file("image");
-
-            $extension = $image->getClientOriginalExtension();
-            $filename = Str::uuid() . "pp" . "." . $extension;
-            $path = $image->storeAs("pfp", $filename, "public");
-            $link = url(Storage::url($path));
-
-            $request->offsetUnset("image");
-            $filteredRequest["photo"] = $link;
-        }
         
-        Users::query()->where("id", $user->id)->update($filteredRequest);
+        Users::query()->where("id", $user->id)->update($request->all());
         return response()->json(["status"=>"success"], 200);
     }
 
+    public function updatePhoto(Request $request) {
+        $validated = $request->validate([
+            "image" => ["required", "mimes:jpg,png,jpeg", "max:2048"]
+        ]);
+
+        $user = $request->user();
+        $image = $request->file('image');
+        $filename = Str::uuid().'.'.$image->getClientOriginalExtension();
+
+        $oldImage = Users::query()->where('id', $user->id)->value('photo');
+        if($oldImage) {
+            $filteredUrl = Str::replace(url('storage')."/", "", $oldImage);
+            Storage::disk('public')->delete($filteredUrl);
+        }
+        
+        $path = $image->storeAs('pfp', $filename, "public");
+        $url = url(Storage::url($path));
+
+        Users::query()->where('id', $user->id)->update(["photo" => $url]);
+
+        return response()->json(["status" => "success", "message" => $filteredUrl], 200);
+    }
+
     public function searchUsers(Request $request) {
+        $validated = $request->validate([
+            "users" => ["required", "string"],
+        ]);
+
         $db = Users::query()->where("username", "like", "%".$request->users.'%')
                         ->orWhere('name', "like", "%".$request->users.'%')
                         ->get();

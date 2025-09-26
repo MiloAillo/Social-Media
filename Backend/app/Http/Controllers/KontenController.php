@@ -11,8 +11,8 @@ class KontenController extends Controller
 {
     function postKonten(Request $request) {
         $validated = $request->validate([
-            "tittle" => ["required", "min:8"],
-            "content" => ["required", "min:10"],
+            "tittle" => ["required", "string", "min:8", "max:200"],
+            "content" => ["required", "string", "min:10", "max:1256"],
             "images.*" => ["mimes:jpg,jpeg,png", "max:2048"]
         ]);
 

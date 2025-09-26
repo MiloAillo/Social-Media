@@ -15,12 +15,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/users', [userController::class, 'getUsers']);
 Route::middleware('auth:sanctum')->post('/editprofile', [userController::class, "updateUser"]);
 Route::middleware('auth:sanctum')->post('/search', [userController::class, 'searchUsers']);
+Route::middleware('auth:sanctum')->post('/updatePhoto', [userController::class, 'updatePhoto']);
 Route::post('/user', [userController::class, "createUser"]);
 Route::delete('/user', [userController::class, "deleteUser"]);
 
 //AccessController
 Route::post('/login', [AccessController::class, "login"]);
-Route::middleware('auth:sanctum')->get('/logout', [AccessController::class, "logout"]);
+Route::middleware('auth:sanctum')->delete('/logout', [AccessController::class, "logout"]);
 Route::middleware('auth:sanctum')->get('/check', [AccessController::class, "check"]);
 
 //KontenController
