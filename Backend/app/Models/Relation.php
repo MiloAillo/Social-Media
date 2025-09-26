@@ -18,11 +18,11 @@ class Relation extends Model
         "updated_at"
     ];
 
-    public function followerPengguna() {
+    public function follower() {
         return $this->belongsTo(Users::class, "follower");
     }
 
-    public function followingPengguna() {
+    public function following() {
         return $this->belongsTo(Users::class, "following");
     }
 }

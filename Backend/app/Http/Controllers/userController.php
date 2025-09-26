@@ -8,16 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-use function PHPUnit\Framework\isArray;
-
 class userController extends Controller
 {
-    public function getUsers() {
-        $data = Users::get();
-
-        return response()->json(["status"=>"ok", "data"=>$data], 200);
-    }
-
     public function createUser(Request $request) {
         $validated = $request->validate([
             "username" => ['required', 'string', "min:6", "max:100", "lowercase", "regex:/^[a-z0-9_-]+$/", 'unique:pengguna,username'],
@@ -38,7 +30,6 @@ class userController extends Controller
         Users::where("id", $request->id)->delete();
 
         return response()->json(["status"=>"ok"], 200);
-
     }
 
     public function updateUser(Request $request) {
@@ -87,5 +78,34 @@ class userController extends Controller
                         ->get();
 
         return response()->json($db, 200);
+    }
+
+    public function userProfile(Request $request) {
+        $user = $request->user();
+
+        $userData = Users::find($user->id);
+        $countFollower = $userData->follower()->count();
+        $countFollowing = $userData->following()->count();
+        $post = $userData->konten;
+        return response()->json([
+            "userData" => $userData,
+            "follower" => $countFollower,
+            "following" => $countFollowing,
+            "konten" => $post
+        ], 200);
+    }
+
+    public function userFollowers(Request $request) {
+        $user = $request->user();
+
+        $userData = Users::find($user->id)->follower()->get(['pengguna.id', 'pengguna.username', 'pengguna.photo']);
+        return response()->json($userData, 200);     
+    }
+
+    public function userFollowings(Request $request) {
+        $user = $request->user();
+
+        $userData = Users::find($user->id)->following()->get(['pengguna.id', 'pengguna.username', 'pengguna.photo']);
+        return response()->json($userData, 200);        
     }
 }

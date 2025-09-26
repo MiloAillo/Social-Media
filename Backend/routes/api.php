@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 // UserController
-Route::middleware('auth:sanctum')->get('/users', [userController::class, 'getUsers']);
 Route::middleware('auth:sanctum')->post('/editprofile', [userController::class, "updateUser"]);
 Route::middleware('auth:sanctum')->post('/search', [userController::class, 'searchUsers']);
 Route::middleware('auth:sanctum')->post('/updatePhoto', [userController::class, 'updatePhoto']);
+Route::middleware('auth:sanctum')->get('/userProfile', [userController::class, 'userProfile']);
+Route::middleware('auth:sanctum')->get('/userFollowers', [userController::class, 'userFollowers']);
+Route::middleware('auth:sanctum')->get('/userFollowings', [userController::class, 'userFollowings']);
 Route::post('/user', [userController::class, "createUser"]);
 Route::delete('/user', [userController::class, "deleteUser"]);
 

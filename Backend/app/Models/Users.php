@@ -26,5 +26,28 @@ class Users extends Authenticatable
         'created_at',
         'updated_at',
         'email',
+        'pivot'
     ];
+
+    public function konten() {
+        return $this->hasMany(Konten::class, "userId");
+    }
+
+    public function follower() {
+        return $this->belongsToMany(
+            Users::class,
+            "relations",
+            "following",
+            "follower"
+        );
+    }
+
+    public function following() {
+        return $this->belongsToMany(
+            Users::class,
+            "relations",
+            "follower",
+            "following"
+        );
+    }
 }
