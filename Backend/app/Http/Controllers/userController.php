@@ -20,8 +20,8 @@ class userController extends Controller
 
     public function createUser(Request $request) {
         $validated = $request->validate([
-            "username" => ['required', 'string', "min:6" , 'unique:pengguna,username'],
-            "email" => ['required', 'email', 'unique:users,email'],
+            "username" => ['required', 'string', "min:6", "max:100", "lowercase", "regex:/^[a-z0-9_-]+$/", 'unique:pengguna,username'],
+            "email" => ['required', "max;100", 'email', 'unique:users,email'],
             "password" => ['required', 'string', 'min:6'] 
         ]);
 
@@ -43,9 +43,9 @@ class userController extends Controller
 
     public function updateUser(Request $request) {
         $validated = $request->validate([
-            "username" => ["min:6", "lowercase", "regex:/^[a-z0-9_-]+$/", "unique:pengguna,username"], 
-            "name" => ["string", "min:6", "not_regex:/^[0-9_-]+$/"],
-            "description" => ["string"]
+            "username" => ["string", "min:6", "max:100", "lowercase", "regex:/^[a-z0-9_-]+$/", "unique:pengguna,username"], 
+            "name" => ["string", "min:6", "max:100", "regex:/^[a-zA-Z ]+$/"],
+            "description" => ["string", "max:150"]
         ]);
 
         $user = $request->user();
@@ -78,6 +78,10 @@ class userController extends Controller
     }
 
     public function searchUsers(Request $request) {
+        $validated = $request->validate([
+            "users" => ["required", "string"],
+        ]);
+
         $db = Users::query()->where("username", "like", "%".$request->users.'%')
                         ->orWhere('name', "like", "%".$request->users.'%')
                         ->get();

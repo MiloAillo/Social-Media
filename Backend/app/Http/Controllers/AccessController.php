@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 class AccessController extends Controller
 {
     public function login(Request $request) {
+        $validated = $request->validate([
+            "email" => ['required', "max;100", 'email'],
+            "password" => [],
+        ]);
+
         if ($request->email === null && $request->password === null) {
             return response()->json(["status"=>"401", "message"=>"butuh email dan password"], 400);
         }
@@ -28,7 +33,8 @@ class AccessController extends Controller
         $request->user()->currentAccessToken()->delete();
     }
 
-    public function check(Request $request) {
-        return $request->user();
+    public function check(Request $request) { // unused, yet
+        $user = $request->user();
+        return response()->json(["status"=>"success", "user"=>$user], 200);
     }
 }
