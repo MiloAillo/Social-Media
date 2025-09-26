@@ -68,6 +68,19 @@ class userController extends Controller
         return response()->json(["status" => "success", "message" => $filteredUrl], 200);
     }
 
+    public function deletePhoto(Request $request) {
+        $user = $request->user();
+
+        $userImage = $user->photo;
+        if(!$userImage) {
+            return response()->json(["status"=> "error","message"=> "no image found"], 400);
+        }
+        $ImagePath = Str::replace(url("storage")."/", "", $userImage);
+        Storage::disk('public')->delete($ImagePath);
+        Users::query()->where('id', $user->id)->update(["photo" => null]);
+        return response()->json(["status" => "success"], 200);
+    }
+
     public function searchUsers(Request $request) {
         $validated = $request->validate([
             "users" => ["required", "string"],
@@ -86,7 +99,7 @@ class userController extends Controller
         $userData = Users::find($user->id);
         $countFollower = $userData->follower()->count();
         $countFollowing = $userData->following()->count();
-        $post = $userData->konten;
+        $post = $userData->konten()->get();
         return response()->json([
             "userData" => $userData,
             "follower" => $countFollower,
