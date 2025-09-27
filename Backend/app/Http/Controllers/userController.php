@@ -13,7 +13,7 @@ class userController extends Controller
     public function createUser(Request $request) {
         $validated = $request->validate([
             "username" => ['required', 'string', "min:6", "max:100", "lowercase", "regex:/^[a-z0-9_-]+$/", 'unique:pengguna,username'],
-            "email" => ['required', "max;100", 'email', 'unique:users,email'],
+            "email" => ['required', "max:100", 'email', 'unique:users,email'],
             "password" => ['required', 'string', 'min:6'] 
         ]);
 
@@ -65,7 +65,7 @@ class userController extends Controller
 
         Users::query()->where('id', $user->id)->update(["photo" => $url]);
 
-        return response()->json(["status" => "success", "message" => $filteredUrl], 200);
+        return response()->json(["status" => "success"], 200);
     }
 
     public function deletePhoto(Request $request) {

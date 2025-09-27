@@ -52,7 +52,7 @@ class KontenController extends Controller
     }
 
     function getKonten() {
-        $res = Konten::with(['pengguna:id,username,photo'])->get();   
+        $res = Konten::with(['pengguna:id,username,photo'])->withCount("likes")->latest()->get()->makeHidden(["content"]);
         return response()->json($res,200);
     }
 

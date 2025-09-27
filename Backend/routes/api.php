@@ -1,9 +1,14 @@
 <?php
 
 use App\Http\Controllers\AccessController;
+use App\Http\Controllers\CommentsLikesController;
 use App\Http\Controllers\KontenController;
 use App\Http\Controllers\OtherUserController;
+use App\Http\Controllers\PostCommentsController;
+use App\Http\Controllers\PostLikesController;
 use App\Http\Controllers\RelationController;
+use App\Http\Controllers\RepliesController;
+use App\Http\Controllers\RepliesLikesController;
 use App\Http\Controllers\userController;
 use App\Models\Relation;
 use Illuminate\Support\Facades\Route;
@@ -41,3 +46,26 @@ Route::middleware('auth:sanctum')->delete('/post', [KontenController::class, "de
 // RelationController
 Route::middleware('auth:sanctum')->post('/addRelation', [RelationController::class, 'addRelation']);
 Route::middleware('auth:sanctum')->delete('/deleteRelation', [RelationController::class,'deleteRelation']);
+
+// PostLikesController
+Route::middleware('auth:sanctum')->post('/addLike', [PostLikesController::class, 'addLike']);
+Route::middleware('auth:sanctum')->delete('/deleteLike', [PostLikesController::class, 'deleteLike']);
+
+// PostCommentsController
+Route::middleware('auth:sanctum')->post('/addComment', [PostCommentsController::class, 'addComment']);
+Route::middleware('auth:sanctum')->delete('/deleteComment', [PostCommentsController::class, 'deleteComment']);
+Route::middleware('auth:sanctum')->post('/getComments', [PostCommentsController::class, 'getComments']);
+
+// RepliesController
+Route::middleware('auth:sanctum')->post('/addReply', [RepliesController::class, 'addReply']);
+Route::middleware('auth:sanctum')->delete('/deleteReply', [RepliesController::class, 'deleteReply']);
+
+// CommentsLikesController
+Route::middleware('auth:sanctum')->post('/addLikeComment', [CommentsLikesController::class, 'addLike']);
+Route::middleware('auth:sanctum')->delete('/deleteLikeComment', [CommentsLikesController::class, 'deleteLike']);
+
+// RepliesLikesController
+Route::middleware('auth:sanctum')->post('/addLikeReply', [RepliesLikesController::class, 'addLike']);
+Route::middleware('auth:sanctum')->delete('/deleteLikeReply', [RepliesLikesController::class, 'deleteLike']);
+
+

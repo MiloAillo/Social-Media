@@ -14,6 +14,10 @@ class RelationController extends Controller
         ]);
 
         $user = $request->user();
+        if($user->id == $request->user) {
+            return response()->json(["status" => "error", "message" => "you cannot follow yourself!"], 401);
+            exit;
+        }
         $db = Relation::query()->create(["follower" => $user->id, "following" => $request->user]);        
 
         return response()->json(["status" => "success", "message" => $db], 200);
