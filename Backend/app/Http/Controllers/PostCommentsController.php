@@ -48,8 +48,8 @@ class PostCommentsController extends Controller
             "postId" => ["numeric", "required"]
         ]);
 
-        $db = PostComments::with(["users", "replies.users:id,username,photo"])->withCount(["likes"])->where("postId", $request->postId)->latest()->get();
+        $db = PostComments::with(["users:id,username,photo", "replies.users:id,username,photo"])->withCount(["likes"])->where("postId", $request->postId)->latest()->get();
 
-        return response()->json(["status"=> "success",""=> $db], 200);
+        return response()->json(["status"=> "success","data"=> $db], 200);
     }
 }
