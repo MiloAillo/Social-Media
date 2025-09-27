@@ -3,6 +3,9 @@ Originally created as a school assignment and turned to be a full blown project.
 <br>
 This repo contains a full-blown CRUD application with a Laravel API service and React, designed with scalable source code to make adopting new technologies easier, such as improved security measures.
 <br>
+## How-to install
+soon...
+<br>
 ## API Documentation
 [Click here to see my API Documentation in Postman](https://www.postman.com/mischikomoe-3564223/workspace/sosmed)
 
@@ -85,6 +88,9 @@ User Profile + Posts
 you can zoom in, its an SVG format :3c
 ![PDM](documentation/pdm.svg)
 <i>Note: inaccuracy may occur, since it is exported directly from SQL Workbench</i>
+<br>
+## Frontend Demo
+soon..
 <br>
 ## Tech Stack
 <ol>
