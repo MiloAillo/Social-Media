@@ -41,7 +41,8 @@ Route::middleware('auth:sanctum')->get('/check', [AccessController::class, "chec
 //KontenController
 Route::middleware('auth:sanctum')->get('/post', [KontenController::class,'getKonten']);
 Route::middleware('auth:sanctum')->post('/post', [KontenController::class,'postKonten']); 
-Route::middleware('auth:sanctum')->delete('/post', [KontenController::class, "deleteKonten"]);      
+Route::middleware('auth:sanctum')->delete('/post', [KontenController::class, "deleteKonten"]);    
+Route::middleware('auth:sanctum')->post('/postDetail', [KontenController::class, "getDetail"]);    
 
 // RelationController
 Route::middleware('auth:sanctum')->post('/addRelation', [RelationController::class, 'addRelation']);

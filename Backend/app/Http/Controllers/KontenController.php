@@ -52,7 +52,7 @@ class KontenController extends Controller
     }
 
     function getKonten() {
-        $res = Konten::with(['pengguna:id,username,photo'])->withCount("likes")->latest()->get()->makeHidden(["content"]);
+        $res = Konten::with(['pengguna:id,username,photo'])->withCount(["likes", "comments"])->latest()->get()->makeHidden(["content"]);
         return response()->json($res,200);
     }
 
@@ -78,5 +78,18 @@ class KontenController extends Controller
         $post->delete();
 
         return response(["status"=> "success","message"=> "Konten deleted", "test" => $post],200);
+    }
+
+    function getDetail(Request $request) {
+        $validated = $request->validate([
+            "postId" => ["required", "numeric"]
+        ]);
+
+        try {
+            $db = Konten::with(["pengguna:id,username,photo"])->withCount(["likes", "comments"])->where("id", $request->postId)->get()->makeHidden("short_content");
+            return response()->json($db, 200);
+        } catch (\Throwable $th) {
+            return response(["status" => "error", "message" => $th->getMessage()], 400);
+        }
     }
 }
