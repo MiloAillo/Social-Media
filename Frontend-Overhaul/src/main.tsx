@@ -3,9 +3,12 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import mainRoute from './routes/mainRoute'
+import { ThemeProvider } from './components/theme-provider'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={mainRoute}></RouterProvider>
+    <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
+      <RouterProvider router={mainRoute}></RouterProvider>
+    </ThemeProvider>
   </StrictMode>,
 )

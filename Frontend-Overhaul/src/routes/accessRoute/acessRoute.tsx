@@ -1,4 +1,4 @@
-import Access from "@/pages/access/Access"
+import Access from "@/pages/access/Signup"
 
 const accessRoute = {
     path: "/access",
