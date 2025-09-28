@@ -90,7 +90,10 @@ you can zoom in, its an SVG format :3c
 <i>Note: inaccuracy may occur, since it is exported directly from SQL Workbench</i>
 <br>
 ## Frontend Demo
-soon..
+![Signup Light Mode](documentation/lSignup.png)
+<br>
+![Signup Dark Mode](documentation/dSignup.png)
+<i>Note: Updates from Sep, 28 2025. layout and design are not final, changes will be made.</i>
 <br>
 ## Tech Stack
 <ol>
