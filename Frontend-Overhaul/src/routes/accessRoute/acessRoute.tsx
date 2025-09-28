@@ -1,8 +1,8 @@
-import Access from "@/pages/access/Signup"
+import Signup from "@/pages/access/Signup"
 
 const accessRoute = {
-    path: "/access",
-    element: <Access/>
+    path: "/signup",
+    element: <Signup/>
 }
 
 export default accessRoute

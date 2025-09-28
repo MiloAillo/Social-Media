@@ -29,9 +29,9 @@ const SignupForm = () => {
     }
 
     return (
-        <div>
+        <div className="h-full">
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-10">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col h-full gap-10">
                     <div className="flex flex-col gap-4">
                         <div className="flex flex-col gap-6">
                             <FormField
@@ -101,7 +101,7 @@ const SignupForm = () => {
                             </div>
                         </div>
                     </div>
-                    <Button type="submit" className="text-lg h-10">Signup</Button>
+                    <Button type="submit" className="text-lg h-10 mb-2">Signup</Button>
                 </form>
             </Form>
         </div>
