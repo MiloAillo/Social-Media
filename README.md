@@ -96,6 +96,7 @@ soon..
 <ol>
   <li>Typescript: Javascript but better</li>
   <li>React: Main library for frontend</li>
+  <li>Shadcn: popular component library for sleek looks</li>
   <li>React Router: For client-side dynamic routing</li>
   <li>Tailwind: No separate CSS file yay</li>
   <li>Axios: Making HTTP Request a little bit easier</li>
