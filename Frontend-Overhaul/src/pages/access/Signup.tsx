@@ -16,6 +16,7 @@ const Signup = () => {
                     <CardHeader className="text-center">
                         <CardTitle className="text-[28px]">Signup</CardTitle>
                         <CardDescription className="text-md">Already have an account?
+                            <span> </span>
                             <Link to={""} className="underline underline-offset-2">Login</Link>
                         </CardDescription>
                     </CardHeader>
