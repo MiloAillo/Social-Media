@@ -14,7 +14,7 @@ const Signup = () => {
     }
 
     return (
-        <main className="flex flex-col gap-15 items-center justify-center w-screen min-h-screen p-5">
+        <main className="flex flex-col gap-15 items-center w-full justify-center min-h-screen p-5">
             {/* ==[Fixed Background]== */}
             <motion.div 
                 className="fixed z-0"
