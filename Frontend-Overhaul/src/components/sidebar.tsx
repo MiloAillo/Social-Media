@@ -10,9 +10,41 @@ import { motion } from 'motion/react'
 function Sidebar() {
     const [activeButton, setActiveButton] = useState<'home'|'search'|'profile'|'post'>('home')
     return (
-        <div className="fixed w-14 sm:w-45 md:w-50 lg:w-60 p-3 sm:p-10 h-svh border-r-1 border-[#fff4] bg-neutral-800 flex flex-col gap-12 font-[Inter] text-white items-center">
-            <p className='hidden sm:block font-black tracking-widest text-3xl'>Sosmed</p>
-            <p className='sm:hidden font-black tracking-widest text-3xl'>S</p>
+        <div className="fixed w-14 sm:w-45 md:w-50 lg:w-60 p-3 sm:p-10 h-svh border-r-1 border-[#fff4] bg-neutral-900 flex flex-col gap-12 font-[Inter] text-white items-center">
+            <motion.div
+                initial = {{
+                    opacity: 0,
+                    y: 20,
+                    filter: "blur(5px)"
+                }}
+                animate = {{
+                    opacity: 100,
+                    y: 0,
+                    filter: "blur(0px)",
+                    transition: {
+                        duration: 0.4
+                    }
+                }}
+            >
+                <p className='hidden sm:block font-black tracking-widest text-3xl'>Sosmed</p>
+            </motion.div>
+            <motion.div
+                initial = {{
+                    opacity: 0,
+                    y: 20,
+                    filter: "blur(5px)"
+                }}
+                animate = {{
+                    opacity: 100,
+                    y: 0,
+                    filter: "blur(0px)",
+                    transition: {
+                        duration: 0.4
+                    }
+                }}
+            >
+                <p className='sm:hidden font-black tracking-widest text-3xl'>S</p>
+            </motion.div>
             <div className="flex flex-col justify-between h-full">
                 <div className='flex flex-col gap-10'>
                     <motion.div 
@@ -29,7 +61,8 @@ function Sidebar() {
                             y: 0,
                             filter: "blur(0px)",
                             transition: {
-                                duration: 0.4
+                                duration: 0.4,
+                                delay: 0.1
                             }
                         }}
                     >
@@ -50,7 +83,8 @@ function Sidebar() {
                             y: 0,
                             filter: "blur(0px)",
                             transition: {
-                                duration: 0.4
+                                duration: 0.4,
+                                delay: 0.2
                             }
                         }}
                     >
@@ -71,7 +105,8 @@ function Sidebar() {
                             y: 0,
                             filter: "blur(0px)",
                             transition: {
-                                duration: 0.4
+                                duration: 0.4,
+                                delay: 0.3
                             }
                         }}                    
                     >
@@ -92,7 +127,8 @@ function Sidebar() {
                             y: 0,
                             filter: "blur(0px)",
                             transition: {
-                                duration: 0.4
+                                duration: 0.4,
+                                delay: 0.4
                             }
                         }}
                     >
@@ -100,10 +136,26 @@ function Sidebar() {
                         <p className={`hidden sm:block tracking-wide lg:text-xl cursor-pointer ${activeButton === 'post' ? "font-semibold" : "font-light"}`}>Post</p>
                     </motion.div>
                 </div>
-                <div onClick={() => window.location.href = "/settings"} className="flex items-center gap-3">
+                <motion.div 
+                onClick={() => window.location.href = "/settings"} className="flex items-center gap-3"
+                initial = {{
+                    opacity: 0,
+                    y: 20,
+                    filter: "blur(5px)"
+                }}
+                animate = {{
+                    opacity: 100,
+                    y: 0,
+                    filter: "blur(0px)",
+                    transition: {
+                        duration: 0.4,
+                        delay: 0.5
+                    }
+                }}
+                >
                     <FontAwesomeIcon icon={faGear} className='text-[25px]'/>
                     <p className={`hidden sm:block tracking-wide lg:text-xl cursor-pointer font-light`}>Settings</p>
-                </div>
+                </motion.div>
             </div>
         </div>
     )
