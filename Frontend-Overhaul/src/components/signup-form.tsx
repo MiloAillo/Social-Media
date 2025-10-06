@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { boolean, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form"
 import { Button } from "./ui/button"
@@ -9,28 +9,16 @@ import { Label } from "./ui/label"
 import { Link } from "react-router-dom"
 import axios, { isAxiosError } from "axios"
 
-const SignupForm = () => {
+interface signupFormInterface {
+    setIsSignedUp: (boolean: boolean) => void
+}
+
+const SignupForm = ({ setIsSignedUp }: signupFormInterface) => {
     const signupFormSchema = z.object({
         username: z.string().min(6).max(50),
         email: z.email(),
         password: z.string().min(8).max(50)
     })
-
-    const signup = async (values: z.infer<typeof signupFormSchema>) => {
-        try {
-            const res = await axios.post("http://127.0.0.1:8000/api/login", {
-                username: values.username,
-                email: values.email,
-                password: values.password
-            })
-            const data = await res.data
-            console.log(data)
-        } catch(err) {
-            if(isAxiosError(err)) {
-                console.log(err)
-            }
-        }
-    }
 
     const form = useForm<z.infer<typeof signupFormSchema>>({
         resolver: zodResolver(signupFormSchema),
@@ -41,8 +29,21 @@ const SignupForm = () => {
         }
     }) 
 
-    const onSubmit = (values: z.infer<typeof signupFormSchema>) => {
-        console.log(values)
+    const onSubmit = async (values: z.infer<typeof signupFormSchema>) => {
+        // try {
+        //     const res = await axios.post("http://127.0.0.1:8000/api/user", {
+        //         username: values.username,
+        //         email: values.email,
+        //         password: values.password
+        //     })
+        //     const data = await res.data
+        //     console.log(data)
+        // } catch(err) {
+        //     if(isAxiosError(err)) {
+        //         console.log(err)
+        //     }
+        // }
+        setIsSignedUp(true)
     }
 
     return (
@@ -118,7 +119,7 @@ const SignupForm = () => {
                             </div>
                         </div>
                     </div>
-                    <Button type="submit" className="text-lg h-10 mb-2" onClick={signup}>Signup</Button>
+                    <Button type="submit" className="text-lg h-10 mb-2">Signup</Button>
                 </form>
             </Form>
         </div>

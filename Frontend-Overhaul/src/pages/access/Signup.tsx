@@ -1,16 +1,41 @@
 import { ModeToggle } from "@/components/mode-toggle"
 import SigninForm from "@/components/signin-form"
 import SignupForm from "@/components/signup-form"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { motion } from "motion/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import img from "../../assets/animeChatting.jpg"
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const Signup = () => {
     const [ showSignup, setShowSignup ] = useState<boolean>(false)
+    const [ isSignedUp, setIsSignedup ] = useState<boolean>(false)
+    const [ redirectInterval, setRedirectInterval ] = useState<number>(5)
 
     const changeCardState = (): void => {
         setShowSignup(prev => !prev)
+    }
+
+    useEffect(() => {
+        setInterval(() => {
+            setRedirectInterval(prev => prev - 1)
+        }, 1000)
+    }, [])
+
+    useEffect(() => {
+        setRedirectInterval(5)
+        if(isSignedUp) {
+            setTimeout(() => {
+                setIsSignedup(false)
+                setShowSignup(false)
+            }, 6255)
+        }
+    }, [isSignedUp])
+
+    const stuckHelper = () => {
+        setIsSignedup(false)
+        setShowSignup(false)
     }
 
     return (
@@ -19,7 +44,7 @@ const Signup = () => {
             <motion.div 
                 className="fixed z-0"
                 initial={{ opacity: 0 }} 
-                animate={{ 
+                animate={{
                     opacity: 100,
                     transition: { duration: 3 }
                  }} 
@@ -60,9 +85,10 @@ const Signup = () => {
                         <p>communicate</p>
                     </div>
                 </motion.div>
+
                 {/* ==[Main Card]== */}
                 <motion.div 
-                    className="flex justify-center items-stretch"
+                    className={`flex justify-center items-stretch`}
                     initial={{
                         opacity: 0,
                         y: 20,
@@ -85,13 +111,15 @@ const Signup = () => {
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "cover",
                         backgroundPosition: "center"
-                    }} className="hidden md:block w-80 md:w-100 lg:w-130 rounded-l-xl p-5">
+                        }} 
+                        className={`rounded-l-xl p-5 ${isSignedUp ? "hidden" : "hidden md:block w-80 md:w-100 lg:w-130"}`}
+                    >
                         <div>
                             <ModeToggle />
                         </div>
                     </div>
                     {/* Signup Card */}
-                    <Card className={`w-80 md:w-100 lg:w-130 flex-col gap-6 md:rounded-l-none ${showSignup ? "flex" : "hidden"} `}>
+                    <Card className={`w-80 md:w-100 lg:w-130 flex-col gap-6 md:rounded-l-none ${!isSignedUp ? showSignup ? "flex" : "hidden" : "hidden"} `}>
                         <CardHeader className="text-center">
                             <CardTitle className="text-[28px]">Sign Up</CardTitle>
                             <CardDescription className="text-md">Already have an account?
@@ -100,11 +128,11 @@ const Signup = () => {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <SignupForm />
+                            <SignupForm setIsSignedUp={setIsSignedup} />
                         </CardContent>
                     </Card>
                     {/* Signin Card */}
-                    <Card className={`w-80 md:w-100 lg:w-130 flex-col gap-6 md:rounded-l-none  ${showSignup ? "hidden" : "flex"}`}>
+                    <Card className={`w-80 md:w-100 lg:w-130 flex-col gap-6 md:rounded-l-none  ${!isSignedUp ? showSignup ? "hidden" : "flex" : "hidden"}`}>
                         <CardHeader className="text-center">
                             <CardTitle className="text-[28px]">Sign In</CardTitle>
                             <CardDescription className="text-md">Dont have an account?
@@ -115,6 +143,19 @@ const Signup = () => {
                         <CardContent>
                             <SigninForm />
                         </CardContent>
+                    </Card>
+                    {/*  */}
+                    <Card
+                        className={`p-7 flex flex-col gap-8 items-center text-center justify-center ${isSignedUp ? "flex" : "hidden"}`}
+                    >
+                        <CardTitle className="text-[28px]">We're able to sign you up</CardTitle>
+                        <FontAwesomeIcon icon={faCircleCheck} size="6x"/>
+                        <div className="flex flex-col items-center text-center">
+                            <CardDescription className="text-md">
+                                {redirectInterval > 0 ? <p>Getting you back to sign up page in {redirectInterval} seconds.</p> : <p>redirecting...</p>}
+                            </CardDescription>
+                            <CardDescription className="font-medium">stuck? <span className="underline underline-offset-1" onClick={stuckHelper}>press here</span></CardDescription>
+                        </div>
                     </Card>
                 </motion.div>
             </div>
