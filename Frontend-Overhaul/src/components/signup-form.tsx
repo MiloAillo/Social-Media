@@ -7,13 +7,30 @@ import { Input } from "./ui/input"
 import { Checkbox } from "./ui/checkbox"
 import { Label } from "./ui/label"
 import { Link } from "react-router-dom"
+import axios, { isAxiosError } from "axios"
 
 const SignupForm = () => {
     const signupFormSchema = z.object({
         username: z.string().min(6).max(50),
         email: z.email(),
         password: z.string().min(8).max(50)
-    }) 
+    })
+
+    const signup = async (values: z.infer<typeof signupFormSchema>) => {
+        try {
+            const res = await axios.post("http://127.0.0.1:8000/api/login", {
+                username: values.username,
+                email: values.email,
+                password: values.password
+            })
+            const data = await res.data
+            console.log(data)
+        } catch(err) {
+            if(isAxiosError(err)) {
+                console.log(err)
+            }
+        }
+    }
 
     const form = useForm<z.infer<typeof signupFormSchema>>({
         resolver: zodResolver(signupFormSchema),
@@ -101,7 +118,7 @@ const SignupForm = () => {
                             </div>
                         </div>
                     </div>
-                    <Button type="submit" className="text-lg h-10 mb-2">Signup</Button>
+                    <Button type="submit" className="text-lg h-10 mb-2" onClick={signup}>Signup</Button>
                 </form>
             </Form>
         </div>

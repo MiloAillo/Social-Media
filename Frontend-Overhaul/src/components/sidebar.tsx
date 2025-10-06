@@ -22,7 +22,8 @@ function Sidebar() {
                     y: 0,
                     filter: "blur(0px)",
                     transition: {
-                        duration: 0.4
+                        duration: 0.4,
+                        delay: 0.4
                     }
                 }}
             >
@@ -39,7 +40,8 @@ function Sidebar() {
                     y: 0,
                     filter: "blur(0px)",
                     transition: {
-                        duration: 0.4
+                        duration: 0.4,
+                        delay: 0.4
                     }
                 }}
             >
@@ -62,7 +64,7 @@ function Sidebar() {
                             filter: "blur(0px)",
                             transition: {
                                 duration: 0.4,
-                                delay: 0.1
+                                delay: 0.5
                             }
                         }}
                     >
@@ -84,7 +86,7 @@ function Sidebar() {
                             filter: "blur(0px)",
                             transition: {
                                 duration: 0.4,
-                                delay: 0.2
+                                delay: 0.6
                             }
                         }}
                     >
@@ -106,7 +108,7 @@ function Sidebar() {
                             filter: "blur(0px)",
                             transition: {
                                 duration: 0.4,
-                                delay: 0.3
+                                delay: 0.7
                             }
                         }}                    
                     >
@@ -128,7 +130,7 @@ function Sidebar() {
                             filter: "blur(0px)",
                             transition: {
                                 duration: 0.4,
-                                delay: 0.4
+                                delay: 0.8
                             }
                         }}
                     >
@@ -149,7 +151,7 @@ function Sidebar() {
                     filter: "blur(0px)",
                     transition: {
                         duration: 0.4,
-                        delay: 0.5
+                        delay: 0.9
                     }
                 }}
                 >
