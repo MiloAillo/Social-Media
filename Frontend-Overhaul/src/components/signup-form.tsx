@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { boolean, z } from "zod"
+import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form"
 import { Button } from "./ui/button"
@@ -30,20 +30,21 @@ const SignupForm = ({ setIsSignedUp }: signupFormInterface) => {
     }) 
 
     const onSubmit = async (values: z.infer<typeof signupFormSchema>) => {
-        // try {
-        //     const res = await axios.post("http://127.0.0.1:8000/api/user", {
-        //         username: values.username,
-        //         email: values.email,
-        //         password: values.password
-        //     })
-        //     const data = await res.data
-        //     console.log(data)
-        // } catch(err) {
-        //     if(isAxiosError(err)) {
-        //         console.log(err)
-        //     }
-        // }
-        setIsSignedUp(true)
+        try {
+            const res = await axios.post("http://127.0.0.1:8000/api/user", {
+                username: values.username,
+                email: values.email,
+                password: values.password
+            })
+            const data = await res.data
+            if (data.status === "ok") {
+                setIsSignedUp(true)
+            }
+        } catch(err) {
+            if(isAxiosError(err)) {
+                console.log(err)
+            }
+        }
     }
 
     return (
