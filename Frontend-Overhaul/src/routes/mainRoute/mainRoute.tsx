@@ -1,9 +1,11 @@
+import checkAuth from "@/loader/check";
 import Home from "@/pages/main/home/Home";
 import MainLayout from "@/pages/main/MainLayout";
 
 const mainRoute = {
     path: "/app",
     element: <MainLayout />,
+    loader: checkAuth,
     children: [
         { index: true, element: <Home /> }
     ]

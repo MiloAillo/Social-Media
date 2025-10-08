@@ -13,8 +13,11 @@ class userController extends Controller
     public function createUser(Request $request) {
         $validated = $request->validate([
             "username" => ['required', 'string', "min:6", "max:100", "lowercase", "regex:/^[a-z0-9_-]+$/", 'unique:pengguna,username'],
-            "email" => ['required', "max:100", 'email', 'unique:users,email'],
-            "password" => ['required', 'string', 'min:6'] 
+            "email" => ['required', "max:100", 'email', 'unique:pengguna,email'],
+            "password" => ['required', 'string', 'min:6']
+        ], [
+            "username.unique" => "unique",
+            "email.unique" => "unique"
         ]);
 
         Users::insert([

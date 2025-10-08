@@ -13,6 +13,7 @@ const Signup = () => {
     const [ isSignedUp, setIsSignedup ] = useState<boolean>(false)
     const [ redirectInterval, setRedirectInterval ] = useState<number>(5)
 
+
     const changeCardState = (): void => {
         setShowSignup(prev => !prev)
     }

@@ -10,7 +10,7 @@ class AccessController extends Controller
     public function login(Request $request) {
         $validated = $request->validate([
             "email" => ['required', "max:100", 'email'],
-            "password" => [],
+            "password" => ["required"],
         ]);
 
         if ($request->email === null && $request->password === null) {
