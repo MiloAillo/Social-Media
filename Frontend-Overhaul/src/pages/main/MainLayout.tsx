@@ -17,7 +17,7 @@ function MainLayout() {
 
     return (
         <div>
-            <div className={`fixed w-screen h-screen bg-neutral-800 flex flex-col items-center justify-center z-1 transition ${isPageReady ? "opacity-0" : "opacity-100"}`}>
+            <div className={`pointer-events-none fixed w-screen h-screen bg-neutral-800 flex flex-col items-center justify-center z-1 transition ${isPageReady ? "opacity-0" : "opacity-100"}`}>
                 <motion.div
                     className="flex flex-col gap-10 justify-center items-center"
                     animate = {{
