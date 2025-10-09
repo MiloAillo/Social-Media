@@ -1,10 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import accessRoute from "./accessRoute/acessRoute";
-import mainRoute from "./mainRoute/mainRoute";
+import auxiliaryRoute from "./auxiliaryRoute";
+import appRoute from "./appRoute/appRoute";
 
 const route = createBrowserRouter([
     accessRoute,
-    mainRoute
+    appRoute,
+    auxiliaryRoute
 ])
 
 export default route

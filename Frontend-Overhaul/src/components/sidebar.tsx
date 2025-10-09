@@ -10,7 +10,7 @@ import { motion } from 'motion/react'
 function Sidebar() {
     const [activeButton, setActiveButton] = useState<'home'|'search'|'profile'|'post'>('home')
     return (
-        <div className="fixed w-14 sm:w-45 md:w-50 lg:w-60 p-3 sm:p-10 h-svh border-r-1 border-[#fff4] bg-neutral-900 flex flex-col gap-12 font-[Inter] text-white items-center">
+        <div className="fixed w-14 sm:w-45 md:w-50 lg:w-60 p-3 sm:p-10 h-lvh border-r-1 border-[#fff4] bg-neutral-900 flex flex-col gap-12 font-[Inter] text-white items-center">
             <motion.div
                 initial = {{
                     opacity: 0,

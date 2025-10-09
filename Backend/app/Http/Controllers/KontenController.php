@@ -53,7 +53,7 @@ class KontenController extends Controller
 
     function getKonten() {
         $res = Konten::with(['pengguna:id,username,photo'])->withCount(["likes", "comments"])->latest()->get()->makeHidden(["content"]);
-        return response()->json($res,200);
+        return response()->json(["status" => "ok", $res],200);
     }
 
     function deleteKonten(Request $request) {
