@@ -89,7 +89,7 @@ class userController extends Controller
             "users" => ["required", "string"],
         ]);
 
-        $db = Users::query()->where("username", "like", "%".$request->users.'%')
+        $db = Users::query()->withCount(['follower', 'following'])->where("username", "like", "%".$request->users.'%')
                         ->orWhere('name', "like", "%".$request->users.'%')
                         ->get();
 

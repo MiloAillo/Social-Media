@@ -6,8 +6,11 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { motion } from 'motion/react'
+import { useNavigate } from 'react-router-dom'
 
 function Sidebar() {
+    const navigate = useNavigate()
+    
     const [activeButton, setActiveButton] = useState<'home'|'search'|'profile'|'post'>('home')
     return (
         <div className="fixed w-14 sm:w-45 md:w-50 lg:w-60 p-3 sm:p-10 h-lvh border-r-1 border-[#fff4] bg-neutral-900 flex flex-col gap-12 font-[Inter] text-white items-center">
@@ -51,7 +54,7 @@ function Sidebar() {
                 <div className='flex flex-col gap-10'>
                     <motion.div 
                         onClick={() => {setActiveButton('home'); 
-                        window.location.href = "/"}} 
+                        navigate("/app")}} 
                         className="flex items-center gap-3"
                         initial = {{
                             opacity: 0,
@@ -73,7 +76,7 @@ function Sidebar() {
                     </motion.div>
                     <motion.div 
                         onClick={() => {setActiveButton('search'); 
-                        window.location.href = "/search"}} 
+                        navigate("/app/search")}} 
                         className="flex items-center gap-3"
                         initial = {{
                             opacity: 0,
