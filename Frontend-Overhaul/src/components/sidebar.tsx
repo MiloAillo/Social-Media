@@ -98,7 +98,7 @@ function Sidebar() {
                     </motion.div>
                     <motion.div 
                         onClick={() => {setActiveButton('profile'); 
-                        window.location.href = "/profile"}} 
+                        navigate("/app/profile")}}
                         className="flex items-center gap-3"
                         initial = {{
                             opacity: 0,
