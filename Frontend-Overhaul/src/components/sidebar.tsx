@@ -120,7 +120,7 @@ function Sidebar() {
                     </motion.div>
                     <motion.div 
                         onClick={() => {setActiveButton('post'); 
-                        window.location.href = "/post"}} 
+                        navigate("/app/post")}} 
                         className="flex items-center gap-3"
                         initial = {{
                             opacity: 0,
@@ -142,7 +142,7 @@ function Sidebar() {
                     </motion.div>
                 </div>
                 <motion.div 
-                onClick={() => window.location.href = "/settings"} className="flex items-center gap-3"
+                onClick={() => navigate("/app/settings")} className="flex items-center gap-3"
                 initial = {{
                     opacity: 0,
                     y: 20,
