@@ -1,6 +1,7 @@
 import checkAuth from "@/loader/check";
 import fetchPost from "@/loader/fetchPost";
 import fetchProfile from "@/loader/fetchProfile";
+import EditProfile from "@/pages/editProfile/editProfile";
 import Home from "@/pages/main/home/Home";
 import MainLayout from "@/pages/main/MainLayout";
 import Profile from "@/pages/profile/Profile";
@@ -14,8 +15,9 @@ const appRoute = {
     children: [
         { index: true, loader: fetchPost, element: <Home /> },
         { path: "search", element: <Search /> },
-        { path: "profile", loader: fetchProfile, element: <Profile /> },
-        {path: "settings", element: <SettingsPage />}
+        { path: "profile", loader: fetchProfile, element: <Profile />},
+        {path: "settings", element: <SettingsPage />},
+        {path: "edit",loader: fetchProfile, element: <EditProfile />}
     ]
 }
 
