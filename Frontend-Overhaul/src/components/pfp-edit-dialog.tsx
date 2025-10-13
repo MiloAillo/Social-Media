@@ -49,6 +49,18 @@ const PhotoEditDialogContent = ({ setIsDialogOpen, isChangePhoto, setIsChangePho
         // KURANG SUCCESS N ERROR HANDLING NYA, SISTEMNYA SUDAAA
     }
 
+    const removePhoto = async () => {
+        try {
+            const res = await axios.get(`${ApiUrl}/api/deletePhoto`, {
+                headers: { Authorization: `Bearer ${window.localStorage.getItem("Authorization")}` }
+            })
+            console.log(res)
+        } catch(err) {
+            console.error(err)
+        }
+        // KURANG SUCCESS N ERROR HANDLING NYA, SISTEMNYA SUDAAA
+    }
+
     return (
             <DialogContent className="w-150">
                 <motion.div className="flex flex-col gap-4"
@@ -212,7 +224,7 @@ const PhotoEditDialogContent = ({ setIsDialogOpen, isChangePhoto, setIsChangePho
                             scale: 1.07
                         }}
                     >
-                        <Button className="w-full bg-red-300">Remove Photo</Button>
+                        <Button className="w-full bg-red-300" onClick={removePhoto}>Remove Photo</Button>
                     </motion.div> : null}
                 </motion.div>
             </DialogContent>
