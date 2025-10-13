@@ -4,7 +4,7 @@ import { useLoaderData } from "react-router-dom"
 import { faCamera } from "@fortawesome/free-regular-svg-icons"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 
-import { useEffect, useRef, useState } from "react"
+import { use, useEffect, useRef, useState } from "react"
 import PhotoEditDialogContent from "@/components/pfp-edit-dialog"
 import z from "zod"
 import { useForm } from "react-hook-form"
@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input"
 import { Form } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import axios from "axios"
+import ApiUrl from "@/lib/api"
 
 const EditProfile = () => {
     const user = useLoaderData() as fetchedProfile
@@ -21,6 +23,9 @@ const EditProfile = () => {
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
     const [isChangePhoto, setIsChangePhoto] = useState<boolean>(false)
     const [isRemovePhoto, setIsRemovePhoto] = useState<boolean>(false)
+    const [name, setName] = useState<string>(user.userData.name)
+    const [username, setUsername] = useState<string>(user.userData.username)
+    const [description, setDescription] = useState<string>(user.userData.description)
 
     useEffect(() => {
         if(!isDialogOpen) {
@@ -46,7 +51,35 @@ const EditProfile = () => {
 
 
     const editProfile = async (values: z.infer<typeof editProfileSchema>) => {
-        console.log(values.name, values.username, values.description)
+        console.log(values.name, values.username, values.description) // debugging purposes
+
+        const formData = new FormData() 
+        // append conditionally if the data changes
+        if(values.name && values.name !== name) {formData.append("name", values.name); setName(values.name)}
+        if(values.username && values.username !== username) {formData.append("username", values.username); setUsername(values.username)}
+        if(values.description && values.description !== description) {formData.append("description", values.description); setDescription(values.description)}
+
+        try {
+            // if nothing change, throw error.
+            if(values.name === name && values.username === username && values.description === description) {
+                throw new Error("no data provided")
+            }
+
+            // Request with the formData
+            const res = await axios.post(`${ApiUrl}/api/editprofile`, formData, {
+                headers: {
+                    Authorization: `Bearer ${window.localStorage.getItem("Authorization")}`,
+                }
+            })
+            console.log(res)
+        } catch(err) {
+            console.error(err)
+        } finally {
+            // final cleanup before using again
+            formData.delete("username")
+            formData.delete("name")
+            formData.delete("description")
+        }
     }
 
     return (
