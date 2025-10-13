@@ -6,6 +6,7 @@ import { Card } from "./ui/card"
 import { Input } from "./ui/input"
 import { faEraser } from "@fortawesome/free-solid-svg-icons"
 import { Button } from "./ui/button"
+import { useRef } from "react"
 
 interface PhotoEditDialogContentInterface {
     isDialogOpen: boolean
@@ -16,7 +17,25 @@ interface PhotoEditDialogContentInterface {
     setIsRemovePhoto: (value: boolean) => void
 }
 
-const PhotoEditDialogContent = ({isDialogOpen, setIsDialogOpen, isChangePhoto, setIsChangePhoto, isRemovePhoto, setIsRemovePhoto}: PhotoEditDialogContentInterface) => {
+const PhotoEditDialogContent = ({ setIsDialogOpen, isChangePhoto, setIsChangePhoto, isRemovePhoto, setIsRemovePhoto}: PhotoEditDialogContentInterface) => {
+    const fileRef = useRef<HTMLInputElement | null>(null)
+
+    const changePhoto = async () => {
+        console.log(fileRef.current && fileRef.current.files && fileRef.current.files.length > 0 ? fileRef.current.files[0].type : null)
+
+        try {
+            if(!(fileRef.current && fileRef.current.files && fileRef.current.files.length > 0)) {
+                throw new Error("file missing")
+            }
+
+            if(fileRef.current.files[0].type !== "image/jpeg" && fileRef.current.files[0].type !== "image/png") {
+                throw new Error("file type not allowed")
+            }
+        } catch(err) {
+            console.error(err)
+        }
+
+    }
 
     return (
             <DialogContent className="w-150">
@@ -24,6 +43,14 @@ const PhotoEditDialogContent = ({isDialogOpen, setIsDialogOpen, isChangePhoto, s
                     layout
                 >
                     {!isRemovePhoto ? <motion.div
+                        initial = {{
+                            y: -20,
+                            opacity: 0
+                        }}
+                        animate = {{
+                            y: 0,
+                            opacity: 100
+                        }}
                         whileHover={{
                             scale: 1.2
                         }}
@@ -53,7 +80,7 @@ const PhotoEditDialogContent = ({isDialogOpen, setIsDialogOpen, isChangePhoto, s
                             scale: 1.1
                         }}               
                     >
-                        <Input type="file" id="photo" />
+                        <Input type="file" id="photo" ref={fileRef} accept="image/png, image/jpeg" />
                     </motion.div> : null}
                     {!isChangePhoto ? <motion.div
                         onClick={() => setIsRemovePhoto(!isRemovePhoto)}
@@ -137,7 +164,7 @@ const PhotoEditDialogContent = ({isDialogOpen, setIsDialogOpen, isChangePhoto, s
                         <Button className="w-full"
                             onClick={() => setIsDialogOpen(false)}
                         >
-                            <Button className="w-full">Upload</Button>
+                            <Button className="w-full" onClick={changePhoto}>Upload</Button>
                         </Button>
                     </motion.div> : null}
                     {isRemovePhoto ? <motion.div

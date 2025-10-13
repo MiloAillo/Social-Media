@@ -4,7 +4,7 @@ import { useLoaderData } from "react-router-dom"
 import { faCamera } from "@fortawesome/free-regular-svg-icons"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 
-import { use, useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import PhotoEditDialogContent from "@/components/pfp-edit-dialog"
 import z from "zod"
 import { useForm } from "react-hook-form"
@@ -80,6 +80,8 @@ const EditProfile = () => {
             formData.delete("name")
             formData.delete("description")
         }
+        // !![READ THIS]!! 
+        // The basic API Call is done, it need useState for warning and successful request for client.
     }
 
     return (
