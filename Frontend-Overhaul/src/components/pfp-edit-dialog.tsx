@@ -7,6 +7,8 @@ import { Input } from "./ui/input"
 import { faEraser } from "@fortawesome/free-solid-svg-icons"
 import { Button } from "./ui/button"
 import { useRef } from "react"
+import axios from "axios"
+import ApiUrl from "@/lib/api"
 
 interface PhotoEditDialogContentInterface {
     isDialogOpen: boolean
@@ -31,10 +33,20 @@ const PhotoEditDialogContent = ({ setIsDialogOpen, isChangePhoto, setIsChangePho
             if(fileRef.current.files[0].type !== "image/jpeg" && fileRef.current.files[0].type !== "image/png") {
                 throw new Error("file type not allowed")
             }
+
+            const formData = new FormData()
+            formData.append("image", fileRef.current.files[0])
+            const res = await axios.post(`${ApiUrl}/api/updatePhoto`, formData, {
+                headers: { 
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${window.localStorage.getItem("Authorization")}`
+                 }
+            })
+            console.log(res)
         } catch(err) {
             console.error(err)
         }
-
+        // KURANG SUCCESS N ERROR HANDLING NYA, SISTEMNYA SUDAAA
     }
 
     return (
