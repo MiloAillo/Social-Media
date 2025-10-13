@@ -17,7 +17,7 @@ const appRoute = {
         { path: "search", element: <Search /> },
         { path: "profile", loader: fetchProfile, element: <Profile />},
         {path: "settings", element: <SettingsPage />},
-        {path: "edit",loader: fetchProfile, element: <EditProfile />}
+        {path: "edit", loader: fetchProfile, element: <EditProfile />}
     ]
 }
 

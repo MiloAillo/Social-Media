@@ -2,14 +2,18 @@ import type { fetchedProfile } from "@/types/fetchProfileType"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useLoaderData } from "react-router-dom"
 import { faCamera } from "@fortawesome/free-regular-svg-icons"
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { Card, CardHeader } from "@/components/ui/card"
-import { faEraser, faImage } from "@fortawesome/free-solid-svg-icons"
-import { XIcon } from "lucide-react"
-import { motion } from "motion/react"
-import { Button } from "@/components/ui/button"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
+
+import { useEffect, useRef, useState } from "react"
+import PhotoEditDialogContent from "@/components/pfp-edit-dialog"
+import z from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useEffect, useState } from "react"
+import { Form } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
 
 const EditProfile = () => {
     const user = useLoaderData() as fetchedProfile
@@ -25,6 +29,26 @@ const EditProfile = () => {
         }
     }, [isDialogOpen])
 
+    const editProfileSchema = z.object({
+        name: z.string().min(6).max(100).regex(/^[a-zA-Z ]+$/).optional(),
+        username: z.string().min(6).max(100).lowercase().regex(/^[a-z0-9_-]+$/),
+        description: z.string().max(150).optional()
+    })
+
+    const form = useForm<z.infer<typeof editProfileSchema>>({
+        resolver: zodResolver(editProfileSchema),
+        defaultValues: {
+            name: user.userData.name,
+            username: user.userData.username,
+            description: user.userData.description
+        }
+    }) 
+
+
+    const editProfile = async (values: z.infer<typeof editProfileSchema>) => {
+        console.log(values.name, values.username, values.description)
+    }
+
     return (
         <div>
             <Dialog>
@@ -38,165 +62,68 @@ const EditProfile = () => {
                         </div>
                     </div>
                 </DialogTrigger>
-                <DialogContent className="w-150">
-                    <motion.div className="flex flex-col gap-4"
-                        layout
-                    >
-                        {!isRemovePhoto ? <motion.div
-                            whileHover={{
-                                scale: 1.2
-                            }}
-                            whileTap={{
-                                scale: 1.1
-                            }}
-                            onClick={() => setIsChangePhoto(prev => !prev)}
-                        >
-                            <Card className="flex flex-row items-center w-full h-fit p-5 rounded-md">
-                                <FontAwesomeIcon icon={faImage} className="text-2xl" />
-                                <p className="w-full text-lg">Change Photo</p>
-                            </Card>
-                        </motion.div> : null}
-                        {isChangePhoto ? <motion.div
-                            initial = {{
-                                y: -20,
-                                opacity: 0
-                            }}
-                            animate = {{
-                                y: 0,
-                                opacity: 100
-                            }}
-                            whileHover={{
-                                scale: 1.2
-                            }}
-                            whileTap={{
-                                scale: 1.1
-                            }}               
-                        >
-                            <Input type="file" id="photo" />
-                        </motion.div> : null}
-                        {!isChangePhoto ? <motion.div
-                            onClick={() => setIsRemovePhoto(prev => !prev)}
-                            initial = {{
-                                y: 20,
-                                opacity: 0
-                            }}
-                            animate = {{
-                                y: 0,
-                                opacity: 100
-                            }}
-                            whileHover={{
-                                scale: 1.2
-                            }}
-                            whileTap={{
-                                scale: 1.1
-                            }}
-                        >
-                            <Card className="flex flex-row items-center w-full h-fit p-5 rounded-md">
-                                <FontAwesomeIcon icon={faEraser} className="text-2xl" />
-                                <p className="w-full text-lg">{!isRemovePhoto ? "Remove Photo" : "Are You Sure?"}</p>
-                            </Card>
-                        </motion.div> : null}
-                        {!isChangePhoto ? !isRemovePhoto ? <motion.div
-                            initial = {{
-                                y: 20,
-                                opacity: 0
-                            }}
-                            animate = {{
-                                y: 0,
-                                opacity: 100
-                            }}
-                            whileHover={{
-                                scale: 1.07
-                            }}
-                        >
-                            <DialogClose className="w-full"
-                                onClick={() => setIsDialogOpen(false)}
-                            >
-                                <Button className="w-full">Nevermind</Button>
-                            </DialogClose>
-                        </motion.div> : null : null}
-                        {isChangePhoto ? <motion.div
-                            initial = {{
-                                y: -20,
-                                opacity: 0
-                            }}
-                            animate = {{
-                                y: 0,
-                                opacity: 100,
-                                transition: {
-                                    delay: 0.2
-                                }
-                            }}
-                            whileHover={{
-                                scale: 1.07
-                            }}
-                        >
-                            <Button className="w-full"
-                                onClick={() => setIsChangePhoto(false)}
-                            >
-                                <Button className="w-full">Nevermind, Go Back</Button>
-                            </Button>
-                        </motion.div> : null}
-                        {isChangePhoto ? <motion.div
-                            initial = {{
-                                y: -20,
-                                opacity: 0
-                            }}
-                            animate = {{
-                                y: 0,
-                                opacity: 100,
-                                transition: {
-                                    delay: 0.4
-                                }
-                            }}
-                            whileHover={{
-                                scale: 1.07
-                            }}
-                        >
-                            <Button className="w-full"
-                                onClick={() => setIsDialogOpen(false)}
-                            >
-                                <Button className="w-full">Upload</Button>
-                            </Button>
-                        </motion.div> : null}
-                        {isRemovePhoto ? <motion.div
-                            initial = {{
-                                y: -20,
-                                opacity: 0
-                            }}
-                            animate = {{
-                                y: 0,
-                                opacity: 100,
-                            }}
-                            whileHover={{
-                                scale: 1.07
-                            }}
-                        >
-                            <Button className="w-full"
-                                onClick={() => setIsRemovePhoto(false)}
-                            >No, Go Back</Button>
-                        </motion.div> : null}
-                        {isRemovePhoto ? <motion.div
-                            initial = {{
-                                y: -20,
-                                opacity: 0
-                            }}
-                            animate = {{
-                                y: 0,
-                                opacity: 100,
-                                transition: {
-                                    delay: 0.2
-                                }
-                            }}
-                            whileHover={{
-                                scale: 1.07
-                            }}
-                        >
-                            <Button className="w-full bg-red-300">Remove Photo</Button>
-                        </motion.div> : null}
-                    </motion.div>
-                </DialogContent>
+                <PhotoEditDialogContent 
+                    isDialogOpen={isDialogOpen} 
+                    setIsDialogOpen={setIsDialogOpen} 
+                    isChangePhoto={isChangePhoto} 
+                    setIsChangePhoto={setIsChangePhoto} 
+                    isRemovePhoto={isRemovePhoto} 
+                    setIsRemovePhoto={setIsRemovePhoto} 
+                />
             </Dialog>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(editProfile)}>
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => {
+                            return (
+                                <FormItem>
+                                    <FormLabel className="text-[18px]">Name</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} className="h-10"/>
+                                    </FormControl>
+                                    <FormDescription>This name should refer to your real name.</FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )
+                        }}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => {
+                            return (
+                                <FormItem>
+                                    <FormLabel className="text-[18px]">Username</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} className="h-10"/>
+                                    </FormControl>
+                                    <FormDescription>This is your public display name.</FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )
+                        }}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="description"
+                        render={({ field }) => {
+                            return (
+                                <FormItem>
+                                    <FormLabel className="text-[18px]">Bio</FormLabel>
+                                    <FormControl>
+                                        <Textarea {...field} className="resize-none" />
+                                    </FormControl>
+                                    <FormDescription>Optional. Share your thoughts here.</FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )
+                        }}
+                    />
+                    <Button type="submit">Update Profile</Button>
+                </form>
+            </Form>
         </div>
     )
 }

@@ -1,0 +1,183 @@
+import { DialogClose, DialogContent } from "./ui/dialog"
+import { motion } from "motion/react"
+import { faImage } from "@fortawesome/free-regular-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Card } from "./ui/card"
+import { Input } from "./ui/input"
+import { faEraser } from "@fortawesome/free-solid-svg-icons"
+import { Button } from "./ui/button"
+
+interface PhotoEditDialogContentInterface {
+    isDialogOpen: boolean
+    setIsDialogOpen: (value: boolean) => void
+    isChangePhoto: boolean
+    setIsChangePhoto: (value: boolean) => void
+    isRemovePhoto: boolean
+    setIsRemovePhoto: (value: boolean) => void
+}
+
+const PhotoEditDialogContent = ({isDialogOpen, setIsDialogOpen, isChangePhoto, setIsChangePhoto, isRemovePhoto, setIsRemovePhoto}: PhotoEditDialogContentInterface) => {
+
+    return (
+            <DialogContent className="w-150">
+                <motion.div className="flex flex-col gap-4"
+                    layout
+                >
+                    {!isRemovePhoto ? <motion.div
+                        whileHover={{
+                            scale: 1.2
+                        }}
+                        whileTap={{
+                            scale: 1.1
+                        }}
+                        onClick={() => setIsChangePhoto(!isChangePhoto)}
+                    >
+                        <Card className="flex flex-row items-center w-full h-fit p-5 rounded-md">
+                            <FontAwesomeIcon icon={faImage} className="text-2xl" />
+                            <p className="w-full text-lg">Change Photo</p>
+                        </Card>
+                    </motion.div> : null}
+                    {isChangePhoto ? <motion.div
+                        initial = {{
+                            y: -20,
+                            opacity: 0
+                        }}
+                        animate = {{
+                            y: 0,
+                            opacity: 100
+                        }}
+                        whileHover={{
+                            scale: 1.2
+                        }}
+                        whileTap={{
+                            scale: 1.1
+                        }}               
+                    >
+                        <Input type="file" id="photo" />
+                    </motion.div> : null}
+                    {!isChangePhoto ? <motion.div
+                        onClick={() => setIsRemovePhoto(!isRemovePhoto)}
+                        initial = {{
+                            y: 20,
+                            opacity: 0
+                        }}
+                        animate = {{
+                            y: 0,
+                            opacity: 100
+                        }}
+                        whileHover={{
+                            scale: 1.2
+                        }}
+                        whileTap={{
+                            scale: 1.1
+                        }}
+                    >
+                        <Card className="flex flex-row items-center w-full h-fit p-5 rounded-md">
+                            <FontAwesomeIcon icon={faEraser} className="text-2xl" />
+                            <p className="w-full text-lg">{!isRemovePhoto ? "Remove Photo" : "Are You Sure?"}</p>
+                        </Card>
+                    </motion.div> : null}
+                    {!isChangePhoto ? !isRemovePhoto ? <motion.div
+                        initial = {{
+                            y: 20,
+                            opacity: 0
+                        }}
+                        animate = {{
+                            y: 0,
+                            opacity: 100
+                        }}
+                        whileHover={{
+                            scale: 1.07
+                        }}
+                    >
+                        <DialogClose className="w-full"
+                            onClick={() => setIsDialogOpen(false)}
+                        >
+                            <Button className="w-full">Nevermind</Button>
+                        </DialogClose>
+                    </motion.div> : null : null}
+                    {isChangePhoto ? <motion.div
+                        initial = {{
+                            y: -20,
+                            opacity: 0
+                        }}
+                        animate = {{
+                            y: 0,
+                            opacity: 100,
+                            transition: {
+                                delay: 0.2
+                            }
+                        }}
+                        whileHover={{
+                            scale: 1.07
+                        }}
+                    >
+                        <Button className="w-full"
+                            onClick={() => setIsChangePhoto(false)}
+                        >
+                            <Button className="w-full">Nevermind, Go Back</Button>
+                        </Button>
+                    </motion.div> : null}
+                    {isChangePhoto ? <motion.div
+                        initial = {{
+                            y: -20,
+                            opacity: 0
+                        }}
+                        animate = {{
+                            y: 0,
+                            opacity: 100,
+                            transition: {
+                                delay: 0.4
+                            }
+                        }}
+                        whileHover={{
+                            scale: 1.07
+                        }}
+                    >
+                        <Button className="w-full"
+                            onClick={() => setIsDialogOpen(false)}
+                        >
+                            <Button className="w-full">Upload</Button>
+                        </Button>
+                    </motion.div> : null}
+                    {isRemovePhoto ? <motion.div
+                        initial = {{
+                            y: -20,
+                            opacity: 0
+                        }}
+                        animate = {{
+                            y: 0,
+                            opacity: 100,
+                        }}
+                        whileHover={{
+                            scale: 1.07
+                        }}
+                    >
+                        <Button className="w-full"
+                            onClick={() => setIsRemovePhoto(false)}
+                        >No, Go Back</Button>
+                    </motion.div> : null}
+                    {isRemovePhoto ? <motion.div
+                        initial = {{
+                            y: -20,
+                            opacity: 0
+                        }}
+                        animate = {{
+                            y: 0,
+                            opacity: 100,
+                            transition: {
+                                delay: 0.2
+                            }
+                        }}
+                        whileHover={{
+                            scale: 1.07
+                        }}
+                    >
+                        <Button className="w-full bg-red-300">Remove Photo</Button>
+                    </motion.div> : null}
+                </motion.div>
+            </DialogContent>
+    )
+}
+
+export default PhotoEditDialogContent
