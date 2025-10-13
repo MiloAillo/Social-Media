@@ -1,24 +1,30 @@
 import { Button } from "@/components/ui/button"
-import type { fetchedProfile } from "@/types/fetchProfileType"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useLoaderData } from "react-router-dom"
 import { faUserPen } from "@fortawesome/free-solid-svg-icons"
 import { motion } from "motion/react"
 import { CheckIcon, PlusIcon } from "lucide-react"
 import { useEffect, useState } from "react"
+import type { fetchedOtherProfile } from "@/types/fetchOtherProfileType"
 
 function OtherProfile() {
-    const user = useLoaderData() as fetchedProfile
+    const user = useLoaderData() as fetchedOtherProfile
     
-    const [isFollowed, setIsFollowed] = useState<boolean>(false)
+    const [initialFollow, setInitialFollow] = useState<boolean>(user.isFollowing)
+    const [isFollowed, setIsFollowed] = useState<boolean>(user.isFollowing)
     const [followers, setFollowers] = useState<number>(user.follower)
     // this isnt fully right. make the backend return boolean that the user follow this exact person or not then attach to the useState
     // also change the useEffect to be compatible
 
     useEffect(() => {
-        console.log("a")
-        if(isFollowed) setFollowers(prev => prev + 1)
-        if(!isFollowed) setFollowers(user.follower)
+        if(initialFollow) {
+            if (isFollowed) setFollowers(user.follower)
+            if (!isFollowed) setFollowers(prev => prev - 1)
+        }
+        if(!initialFollow) {
+            if (!isFollowed) setFollowers(user.follower)
+            if (isFollowed) setFollowers(prev => prev + 1)
+        }
     }, [isFollowed])
 
     return (

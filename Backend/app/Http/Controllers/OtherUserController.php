@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Relation;
 use App\Models\Users;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,8 @@ class OtherUserController extends Controller
             "userId" => ["required", "numeric"]
         ]);
 
+        $userId = $request->user()->id;
+
         $userData = Users::find($request->userId);
         
         if (!$userData) {
@@ -23,11 +26,13 @@ class OtherUserController extends Controller
         $countFollower = $userData->follower()->count();
         $countFollowing = $userData->following()->count();
         $post = $userData->konten()->get();
+        $isFollowing = $userData->follower()->where("pengguna.id", $userId)->exists();
         return response()->json([
             "userData" => $userData,
             "follower" => $countFollower,
             "following" => $countFollowing,
-            "konten" => $post
+            "konten" => $post,
+            "isFollowing" => $isFollowing
         ], 200);
     }
 

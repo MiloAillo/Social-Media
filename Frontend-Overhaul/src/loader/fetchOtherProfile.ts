@@ -1,9 +1,9 @@
 import ApiUrl from "@/lib/api"
-import type { fetchedProfile } from "@/types/fetchProfileType"
+import type { fetchedOtherProfile } from "@/types/fetchOtherProfileType"
 import axios, { isAxiosError } from "axios"
 import { redirect, type LoaderFunctionArgs } from "react-router-dom"
 
-const fetchOtherProfile = async ({ params }: LoaderFunctionArgs): Promise<fetchedProfile | Response | null> => {
+const fetchOtherProfile = async ({ params }: LoaderFunctionArgs): Promise<fetchedOtherProfile | Response | null> => {
     const id = params.id
     const token = window.localStorage.getItem("Authorization")
 
@@ -29,7 +29,7 @@ const fetchOtherProfile = async ({ params }: LoaderFunctionArgs): Promise<fetche
         const data = await res.data
         console.log(data)
 
-        return data as fetchedProfile
+        return data as fetchedOtherProfile
     } catch(err) {
         console.log(err)
         if (isAxiosError(err)) {
