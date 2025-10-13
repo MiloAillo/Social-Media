@@ -5,12 +5,15 @@ import ApiUrl from "@/lib/api"
 import type { usersSearchedWrapper } from "@/types/usersSearchedType"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { easeIn, easeInOut, easeOut, motion } from "motion/react"
+import { easeOut, motion } from "motion/react"
+import { useNavigate } from "react-router-dom"
 
 function Search() {
     const [input, setInput] = useState<string>("")
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [data, setData] = useState<usersSearchedWrapper>()
+
+    const navigate = useNavigate()
 
     const token = window.localStorage.getItem("Authorization")
 
@@ -61,7 +64,7 @@ function Search() {
                                 ease: easeOut
                             }    
                         }}
-                        
+                        onClick={() => navigate(`/app/${user.id}`)}
                     >
                         <img src={`${user.photo}`} alt={`${user.username}\` photo`} className="rounded-full h-full w-auto" />
                         <div>

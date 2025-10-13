@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Users;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class OtherUserController extends Controller
 {
     public function getProfile(Request $request) {
@@ -13,6 +15,11 @@ class OtherUserController extends Controller
         ]);
 
         $userData = Users::find($request->userId);
+        
+        if (!$userData) {
+            return response()->json(["status" => "error", "message" => "no user found"] ,400);
+        }
+
         $countFollower = $userData->follower()->count();
         $countFollowing = $userData->following()->count();
         $post = $userData->konten()->get();

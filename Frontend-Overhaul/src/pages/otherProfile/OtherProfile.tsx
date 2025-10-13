@@ -3,9 +3,23 @@ import type { fetchedProfile } from "@/types/fetchProfileType"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useLoaderData } from "react-router-dom"
 import { faUserPen } from "@fortawesome/free-solid-svg-icons"
+import { motion } from "motion/react"
+import { CheckIcon, PlusIcon } from "lucide-react"
+import { useEffect, useState } from "react"
 
-function Profile() {
+function OtherProfile() {
     const user = useLoaderData() as fetchedProfile
+    
+    const [isFollowed, setIsFollowed] = useState<boolean>(false)
+    const [followers, setFollowers] = useState<number>(user.follower)
+    // this isnt fully right. make the backend return boolean that the user follow this exact person or not then attach to the useState
+    // also change the useEffect to be compatible
+
+    useEffect(() => {
+        console.log("a")
+        if(isFollowed) setFollowers(prev => prev + 1)
+        if(!isFollowed) setFollowers(user.follower)
+    }, [isFollowed])
 
     return (
         <div className="lg:w-[85%]">
@@ -17,9 +31,17 @@ function Profile() {
                 <div className="w-full">
                     <div className="text-white flex flex-col gap-5 md:gap-10 px-5 sm:px-15 md:px-15 lg:px-30 pt-10 w-full">
                         <div className="flex gap-5 md:gap-15 w-full items-center">
-                            <div className="shrink-0 w-30 h-30 md:w-40 md:h-40">
+                            <div className="relative shrink-0 w-30 h-30 md:w-40 md:h-40">
                                 <img src={`${user.userData.photo}`} alt="" className="w-30 h-30 md:w-40 md:h-40 rounded-full border-none object-cover"/>
-                                <Button className="absolute hidden md:block translate-x-[28px] translate-y-[-30px] bg-blue-300">Edit Profile</Button>
+                                <motion.div className="absolute bottom-0 left-28 bg-neutral-100 w-11 h-11 rounded-full flex justify-center items-center"
+                                    whileTap={{
+                                        scale: 0.90
+                                    }}
+                                    onClick={() => setIsFollowed(!isFollowed)}
+                                >
+                                    {!isFollowed ? <motion.div key="plus" initial={{ rotate: 180 }} animate={{ rotate: 0 }}><PlusIcon color="black" size={27} /></motion.div> 
+                                    : <motion.div key="check" initial={{ rotate: 180 }} animate={{ rotate: 0 }}><CheckIcon color="black" size={27} /></motion.div>}
+                                </motion.div>
                             </div>
                             <div className="flex flex-row justify-between w-full">
                                 <div className="flex justify-between w-full">
@@ -30,7 +52,7 @@ function Profile() {
                                         </div>
                                         <div className="hidden sm:flex flex-row gap-7">
                                             <p className="font-light"><span className="font-medium">{user.following} </span>Following</p>
-                                            <p className="font-light"><span className="font-medium">{user.follower} </span>Followers</p>
+                                            <p className="font-light"><span className="font-medium">{followers} </span>Followers</p>
                                             <p className="font-light"><span className="font-medium">1 </span>Posts</p>
                                         </div>
                                         <div className="hidden md:block">
@@ -45,7 +67,7 @@ function Profile() {
                         </div>
                         <div className="flex sm:hidden flex-row gap-7">
                             <p className="font-light"><span className="font-medium">{user.following} </span>Following</p>
-                            <p className="font-light"><span className="font-medium">{user.follower} </span>Followers</p>
+                            <p className="font-light"><span className="font-medium">{followers} </span>Followers</p>
                             <p className="font-light"><span className="font-medium">1 </span>Posts</p>
                         </div>
                         <div className="md:hidden">
@@ -60,4 +82,4 @@ function Profile() {
 
 
 
-export default Profile
+export default OtherProfile

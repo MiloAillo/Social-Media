@@ -29,7 +29,7 @@ Route::post('/user', [userController::class, "createUser"]);
 Route::delete('/user', [userController::class, "deleteUser"]);
 
 // OtherUserController
-Route::middleware('auth:sanctum')->get('/getProfile', [OtherUserController::class, 'getProfile']);
+Route::middleware('auth:sanctum')->post('/getProfile', [OtherUserController::class, 'getProfile']);
 Route::middleware('auth:sanctum')->get('/getFollowers', [OtherUserController::class, 'getFollowers']);
 Route::middleware('auth:sanctum')->get('/getFollowings', [OtherUserController::class, 'getFollowings']);
 
