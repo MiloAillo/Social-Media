@@ -25,7 +25,7 @@ class OtherUserController extends Controller
 
         $countFollower = $userData->follower()->count();
         $countFollowing = $userData->following()->count();
-        $post = $userData->konten()->get();
+        $post = $userData->konten()->withCount(["likes", "comments"])->get()->makeHidden(['content']);
         $isFollowing = $userData->follower()->where("pengguna.id", $userId)->exists();
         return response()->json([
             "userData" => $userData,

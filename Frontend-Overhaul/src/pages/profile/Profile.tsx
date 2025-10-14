@@ -2,10 +2,15 @@ import { Button } from "@/components/ui/button"
 import type { fetchedProfile } from "@/types/fetchProfileType"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useLoaderData } from "react-router-dom"
-import { faUserPen } from "@fortawesome/free-solid-svg-icons"
+import { faFaceSmile, faHeartCrack, faUserPen } from "@fortawesome/free-solid-svg-icons"
+import ContentStatistics from "@/components/content-statistics"
 
 function Profile() {
     const user = useLoaderData() as fetchedProfile
+
+    const likePost = async (id: number) => {
+        console.log(id)
+    }
 
     return (
         <div className="lg:w-[85%]">
@@ -51,7 +56,42 @@ function Profile() {
                         <div className="md:hidden">
                             <p>{user.userData.description}</p>
                         </div>
-                        <div className="border-t-1 h-100 bg-[#191d23]"></div>
+                        <div className="border-t-1 h-full">
+                            {user.konten.length > 0 ? user.konten.map((konten) => (
+                                <div className="w-full">
+                                    {/* <div className="flex flex-row items-center gap-2 md:gap-3 border-b-1 p-2 w-full pb-3">
+                                        <img src={`${user.userData.photo}`} alt="" className="rounded-full h10 w-9 md:w-10 bg-white"/>
+                                        <div>
+                                            <p className="font-medium text-md sm:text-lg tracking-wide">{user.userData.username}</p>
+                                            <p className="font-light text-sm sm:text-md text-neutral-400">{konten.created_at}</p>
+                                        </div>
+                                    </div> */}
+                                    <div className="py-2 flex flex-col gap-2">
+                                        {konten.images ? <div className="flex flex-wrap w-full h-30 md:h-45 overflow-y-hidden">
+                                            {konten.images?.map((image) => { 
+                                                return (
+                                                <div className="flex-1 w-full"><img src={`${image}`} alt="" className="w-full h-full"/></div>
+                                            )})}
+                                        </div> : null}
+                                        <div>
+                                            <p className="text-neutral-400">{konten.created_at}</p>
+                                            <p className="font-bold text-lg md:text-2xl my-1">{konten.tittle}</p>
+                                        </div>
+                                        <p className="font-light text-md md:text-lg">{konten.short_content}</p> 
+                                        {/* IM DONE FOR NOW, NEXT IS ADDING TITTLE AND STUFF SO IT MATCH THE BACKEND RESPONSE */}
+                                    </div>
+                                    <div className="w-full h-fit border-t-1">
+                                        <ContentStatistics likes_count={konten.likes_count} comments_count={konten.comments_count} likePost={likePost} />
+                                    </div>
+                                </div>
+                            ))
+                            :
+                            <div className="flex justify-center items-center flex-col h-full gap-3 mt-20">
+                                <FontAwesomeIcon icon={faFaceSmile} className="text-6xl md:text-7xl lg:text-8xl opacity-25" />
+                                <p className="text-lg md:text-2xl text-neutral-500 font-bold px-5 text-center">Add your first post!</p>
+                            </div>
+                            }
+                        </div>
                     </div>
                 </div>}
         </div>

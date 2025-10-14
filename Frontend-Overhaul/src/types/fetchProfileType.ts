@@ -6,7 +6,19 @@ type userData = {
     username: string
 }
 
-type konten = [unknown]
+type images = [string] | null
+
+type kontenData = {
+    comments_count: number
+    created_at: string
+    id: number
+    images: images
+    likes_count: number
+    short_content: string
+    tittle: string
+}
+
+type konten = kontenData[]
 
 type fetchedProfile = {
     follower: number

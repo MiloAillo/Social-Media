@@ -102,7 +102,7 @@ class userController extends Controller
         $userData = Users::find($user->id);
         $countFollower = $userData->follower()->count();
         $countFollowing = $userData->following()->count();
-        $post = $userData->konten()->get();
+        $post = $userData->konten()->withCount(["likes", "comments"])->get()->makeHidden(['content']);
         return response()->json([
             "userData" => $userData,
             "follower" => $countFollower,
