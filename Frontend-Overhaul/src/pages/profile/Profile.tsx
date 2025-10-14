@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button"
 import type { fetchedProfile } from "@/types/fetchProfileType"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import { faFaceSmile, faHeartCrack, faUserPen } from "@fortawesome/free-solid-svg-icons"
 import ContentStatistics from "@/components/content-statistics"
 
 function Profile() {
     const user = useLoaderData() as fetchedProfile
+    const navigate = useNavigate()
 
     const likePost = async (id: number) => {
         console.log(id)
@@ -24,7 +25,7 @@ function Profile() {
                         <div className="flex gap-5 md:gap-15 w-full items-center">
                             <div className="shrink-0 w-30 h-30 md:w-40 md:h-40">
                                 <img src={`${user.userData.photo}`} alt="" className="w-30 h-30 md:w-40 md:h-40 rounded-full border-none object-cover"/>
-                                <Button className="absolute hidden md:block translate-x-[28px] translate-y-[-30px] bg-blue-300">Edit Profile</Button>
+                                <Button onClick={() => navigate("/app/edit")} className="absolute hidden md:block translate-x-[28px] translate-y-[-30px] bg-blue-300">Edit Profile</Button>
                             </div>
                             <div className="flex flex-row justify-between w-full">
                                 <div className="flex justify-between w-full">
@@ -42,7 +43,7 @@ function Profile() {
                                             <p>{user.userData.description}</p>
                                         </div>
                                     </div>
-                                    <Button className="md:hidden fixed bottom-10 right-10 h-13 w-13 rounded-full bg-blue-300">
+                                    <Button onClick={() => navigate("/app/edit")} className="md:hidden fixed bottom-7 right-7 sm:bottom-10 sm:right-10 h-13 w-13 rounded-full bg-blue-300">
                                         <FontAwesomeIcon icon={faUserPen} className="text-lg" />
                                     </Button>
                                 </div>
@@ -80,7 +81,7 @@ function Profile() {
                                         <p className="font-light text-md md:text-lg">{konten.short_content}</p> 
                                         {/* IM DONE FOR NOW, NEXT IS ADDING TITTLE AND STUFF SO IT MATCH THE BACKEND RESPONSE */}
                                     </div>
-                                    <div className="w-full h-fit border-t-1">
+                                    <div className="w-full h-fit border-t-1 pt-3 sm:pt-0">
                                         <ContentStatistics likes_count={konten.likes_count} comments_count={konten.comments_count} likePost={likePost} />
                                     </div>
                                 </div>

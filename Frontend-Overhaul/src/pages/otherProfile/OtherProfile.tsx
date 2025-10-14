@@ -44,7 +44,7 @@ function OtherProfile() {
                         <div className="flex gap-5 md:gap-15 w-full items-center">
                             <div className="relative shrink-0 w-30 h-30 md:w-40 md:h-40">
                                 <img src={`${user.userData.photo}`} alt="" className="w-30 h-30 md:w-40 md:h-40 rounded-full border-none object-cover"/>
-                                <motion.div className="absolute bottom-0 left-28 bg-neutral-100 w-11 h-11 rounded-full flex justify-center items-center"
+                                <motion.div className="absolute bottom-0 left-21 h-9 w-9 md:bottom-0 md:left-28 bg-neutral-100 md:w-11 md:h-11 rounded-full flex justify-center items-center"
                                     whileTap={{
                                         scale: 0.90
                                     }}
