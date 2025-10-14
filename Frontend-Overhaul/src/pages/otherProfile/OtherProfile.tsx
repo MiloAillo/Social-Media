@@ -70,9 +70,6 @@ function OtherProfile() {
                                             <p>{user.userData.description}</p>
                                         </div>
                                     </div>
-                                    <Button className="md:hidden fixed bottom-10 right-10 h-13 w-13 rounded-full bg-blue-300">
-                                        <FontAwesomeIcon icon={faUserPen} className="text-lg" />
-                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +107,7 @@ function OtherProfile() {
                                         <p className="font-light text-md md:text-lg">{konten.short_content}</p> 
                                         {/* IM DONE FOR NOW, NEXT IS ADDING TITTLE AND STUFF SO IT MATCH THE BACKEND RESPONSE */}
                                     </div>
-                                    <div className="w-full h-fit border-t-1">
+                                    <div className="w-full h-fit border-t-1 pt-3 sm:pt-0">
                                         <ContentStatistics likes_count={konten.likes_count} comments_count={konten.comments_count} likePost={likePost} />
                                     </div>
                                 </div>

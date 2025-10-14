@@ -43,7 +43,7 @@ function Search() {
     }, [input])
 
     return (
-        <div className="px-5 grow sm:px-10 md:px-15 lg:px-20 pt-5 md:pt-10 overflow-hidden flex flex-col gap-5">
+        <div className="grow pt-5 md:pt-10 max-w-[85%] sm:max-w-[80%] lg:max-w-[75%] flex flex-col gap-5">
             <div className="w-full h-11 sm:h-14 border-b-2 border-[#8d8d8d] flex flex-row items-center justify-between px-3 gap-2">
                 <input type="text" onChange={(e) => {setInput(e.target.value)}} placeholder="Search..." className="h-full flex-1 text-white font-semibold text-md sm:text-lg lg:text-xl focus:outline-0"/>
                 {/* <FontAwesomeIcon icon={faSearch} color="white" className="text-xl sm:text-2xl w-full h-full" /> */}
@@ -51,7 +51,7 @@ function Search() {
             <div className="flex flex-col gap-7 w-full h-screen">
                 {isLoading ? null : data?.map((user) => (
                     <motion.div 
-                        className="flex w-full h-27 items-center gap-5"
+                        className="flex w-full h-fit items-center gap-5"
                         initial = {{
                             x: 100,
                             opacity: 0
@@ -66,15 +66,15 @@ function Search() {
                         }}
                         onClick={() => navigate(`/app/${user.id}`)}
                     >
-                        <img src={`${user.photo}`} alt={`${user.username}\` photo`} className="rounded-full h-full w-auto" />
+                        <img src={`${user.photo}`} alt={`${user.username}\` photo`} className="rounded-full h-20 md:h-22 lg:h-25 w-20 md:w-22 lg:w-25" />
                         <div>
                             <div className="flex flex-col gap-1">
-                                <p className="font-bold text-2xl">{user.username}</p>
-                                <p className="font-medium text-lg">{user.description}</p>
+                                <p className="font-semibold text-xl md:text-[20px] lg:text-2xl">{user.username}</p>
+                                <p className="font-semilight sm:font-medium sm:text-base md:text-base lg:text-lg text-neutral-200">{user.description}</p>
                             </div>
-                            <div className="flex gap-5 font-light">
-                                <p>follower: {user.follower_count}</p>
-                                <p>following: {user.following_count}</p>
+                            <div className="hidden sm:flex gap-5 font-light">
+                                <p className="text-neutral-300">follower: {user.follower_count}</p>
+                                <p className="text-neutral-300">following: {user.following_count}</p>
                             </div>
                         </div>
                     </motion.div>
