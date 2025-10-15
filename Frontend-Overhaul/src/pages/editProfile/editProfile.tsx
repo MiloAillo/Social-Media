@@ -85,14 +85,14 @@ const EditProfile = () => {
     }
 
     return (
-        <div>
+        <div className="flex flex-col items-center gap-10 pt-10 w-[85%] sm:w-[90%] md:w-full md:px-20 max-w-[1100px]">
             <Dialog>
                 <DialogTrigger
                     onClick={() => setIsDialogOpen(true)}
                 >
-                    <div className="h-30 w-30">
+                    <div className="h-33 w-33 sm:h-35 sm:w-35 md:h-37 md:w-37 lg:h-40 lg:w-40">
                         <img src={user.userData.photo} alt={user.userData.username} className="w-full h-full rounded-full" />
-                        <div className="flex justify-center items-center translate-y-[-7.5rem] w-full h-full rounded-full bg-neutral-950 opacity-45">
+                        <div className="flex justify-center items-center translate-y-[-8.25rem] sm:translate-y-[-8.75rem] md:translate-y-[-9.25rem] lg:translate-y-[-10rem] w-full h-full rounded-full bg-neutral-950 opacity-45">
                             <FontAwesomeIcon icon={faCamera} className="text-4xl" />
                         </div>
                     </div>
@@ -107,18 +107,21 @@ const EditProfile = () => {
                 />
             </Dialog>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(editProfile)}>
+                <form onSubmit={form.handleSubmit(editProfile)}
+                    className="flex flex-col gap-5 w-full"
+                >
                     <FormField
                         control={form.control}
                         name="name"
                         render={({ field }) => {
                             return (
                                 <FormItem>
-                                    <FormLabel className="text-[18px]">Name</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} className="h-10"/>
-                                    </FormControl>
-                                    <FormDescription>This name should refer to your real name.</FormDescription>
+                                    <div className="flex flex-col border-1 px-3 py-2 rounded-lg">
+                                        <FormLabel className="text-base sm:text-lg lg:text-xl text-neutral-400 font-light">Name</FormLabel>
+                                        <FormControl>
+                                                <input {...field} className="flex-1 text-white font-medium text-base sm:text-lg lg:text-xl focus:outline-0"/>
+                                        </FormControl>
+                                    </div>
                                     <FormMessage />
                                 </FormItem>
                             )
@@ -130,11 +133,12 @@ const EditProfile = () => {
                         render={({ field }) => {
                             return (
                                 <FormItem>
-                                    <FormLabel className="text-[18px]">Username</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} className="h-10"/>
-                                    </FormControl>
-                                    <FormDescription>This is your public display name.</FormDescription>
+                                    <div className="flex flex-col border-1 px-3 py-2 rounded-lg">
+                                        <FormLabel className="text-base sm:text-lg lg:text-xl text-neutral-400 font-light">Username</FormLabel>
+                                        <FormControl>
+                                                <input {...field} className="flex-1 text-white font-medium text-base sm:text-lg lg:text-xl focus:outline-0"/>
+                                        </FormControl>
+                                    </div>
                                     <FormMessage />
                                 </FormItem>
                             )
@@ -146,17 +150,26 @@ const EditProfile = () => {
                         render={({ field }) => {
                             return (
                                 <FormItem>
-                                    <FormLabel className="text-[18px]">Bio</FormLabel>
-                                    <FormControl>
-                                        <Textarea {...field} className="resize-none" />
-                                    </FormControl>
-                                    <FormDescription>Optional. Share your thoughts here.</FormDescription>
+                                    <div className="grow flex flex-col border-1 px-3 py-2 rounded-lg">
+                                        <FormLabel className="text-base sm:text-lg lg:text-xl text-neutral-400 font-light">Bio</FormLabel>
+                                        <FormControl>
+                                            <textarea 
+                                                {...field} 
+                                                style={{scrollbarWidth: "none"}} 
+                                                className="resize-none flex-1 text-white font-medium text-base sm:text-lg lg:text-xl focus:outline-0" 
+                                                rows={5}
+                                                placeholder="Your Description Here" 
+                                            />
+                                        </FormControl>
+                                    </div>
                                     <FormMessage />
                                 </FormItem>
                             )
                         }}
                     />
-                    <Button type="submit">Update Profile</Button>
+                    <div className="w-full flex justify-end">
+                        <Button type="submit" className="h-10 text-base w-fit">Update Profile</Button>
+                    </div>
                 </form>
             </Form>
         </div>
