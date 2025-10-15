@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useLoaderData } from "react-router-dom"
-import { faHeartCrack, faUserPen } from "@fortawesome/free-solid-svg-icons"
+import { faHeartCrack, faUser, faUserPen } from "@fortawesome/free-solid-svg-icons"
 import { motion } from "motion/react"
 import { CheckIcon, PlusIcon } from "lucide-react"
 import { useEffect, useState } from "react"
@@ -43,7 +43,12 @@ function OtherProfile() {
                     <div className="text-white flex flex-col gap-5 md:gap-10 px-5 sm:px-15 md:px-15 lg:px-30 pt-10 w-full">
                         <div className="flex gap-5 md:gap-15 w-full items-center">
                             <div className="relative shrink-0 w-30 h-30 md:w-40 md:h-40">
-                                <img src={`${user.userData.photo}`} alt="" className="w-30 h-30 md:w-40 md:h-40 rounded-full border-none object-cover"/>
+                                {user.userData.photo 
+                                    ? <img src={`${user.userData.photo}`} alt="" className="w-30 h-30 md:w-40 md:h-40 rounded-full border-none object-cover"/>
+                                    : <div className="flex justify-center items-center w-30 h-30 md:w-40 md:h-40 bg-neutral-400 rounded-full border-none object-cover">
+                                        <FontAwesomeIcon icon={faUser} className="text-6xl md:text-7xl" />
+                                    </div>
+                                }
                                 <motion.div className="absolute bottom-0 left-21 h-9 w-9 md:bottom-0 md:left-28 bg-neutral-100 md:w-11 md:h-11 rounded-full flex justify-center items-center"
                                     whileTap={{
                                         scale: 0.90

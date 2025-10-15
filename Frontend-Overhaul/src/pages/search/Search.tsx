@@ -7,6 +7,8 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { easeOut, motion } from "motion/react"
 import { useNavigate } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faUser } from "@fortawesome/free-solid-svg-icons"
 
 function Search() {
     const [input, setInput] = useState<string>("")
@@ -66,7 +68,12 @@ function Search() {
                         }}
                         onClick={() => navigate(`/app/${user.id}`)}
                     >
-                        <img src={`${user.photo}`} alt={`${user.username}\` photo`} className="rounded-full h-20 md:h-22 lg:h-25 w-20 md:w-22 lg:w-25" />
+                        {user.photo 
+                            ? <img src={`${user.photo}`} alt={`${user.username}\` photo`} className="rounded-full h-20 md:h-22 lg:h-25 w-20 md:w-22 lg:w-25" />
+                            : <div className="rounded-full h-20 md:h-22 lg:h-25 w-20 md:w-22 lg:w-25 bg-neutral-400 flex justify-center items-center">
+                                <FontAwesomeIcon icon={faUser} className="text-4xl lg:text-5xl" />
+                             </div>
+                        }
                         <div>
                             <div className="flex flex-col gap-1">
                                 <p className="font-semibold text-xl md:text-[20px] lg:text-2xl">{user.username}</p>

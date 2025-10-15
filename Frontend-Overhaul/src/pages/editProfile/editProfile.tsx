@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
 import ApiUrl from "@/lib/api"
+import { faUser } from "@fortawesome/free-solid-svg-icons"
 
 const EditProfile = () => {
     const user = useLoaderData() as fetchedProfile
@@ -91,7 +92,12 @@ const EditProfile = () => {
                     onClick={() => setIsDialogOpen(true)}
                 >
                     <div className="h-33 w-33 sm:h-35 sm:w-35 md:h-37 md:w-37 lg:h-40 lg:w-40">
-                        <img src={user.userData.photo} alt={user.userData.username} className="w-full h-full rounded-full" />
+                        {user.userData.photo 
+                            ? <img src={user.userData.photo} alt={user.userData.username} className="w-full h-full rounded-full" />
+                            : <div className="flex justify-center items-center w-full h-full bg-neutral-400 rounded-full border-none object-cover">
+                                <FontAwesomeIcon icon={faUser} className="text-6xl md:text-7xl" />
+                              </div>
+                        }
                         <div className="flex justify-center items-center translate-y-[-8.25rem] sm:translate-y-[-8.75rem] md:translate-y-[-9.25rem] lg:translate-y-[-10rem] w-full h-full rounded-full bg-neutral-950 opacity-45">
                             <FontAwesomeIcon icon={faCamera} className="text-4xl" />
                         </div>

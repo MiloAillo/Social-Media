@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import type { fetchedProfile } from "@/types/fetchProfileType"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useLoaderData, useNavigate } from "react-router-dom"
-import { faFaceSmile, faHeartCrack, faUserPen } from "@fortawesome/free-solid-svg-icons"
+import { faFaceSmile, faHeartCrack, faUser, faUserPen } from "@fortawesome/free-solid-svg-icons"
 import ContentStatistics from "@/components/content-statistics"
 
 function Profile() {
@@ -24,7 +24,12 @@ function Profile() {
                     <div className="text-white flex flex-col gap-5 md:gap-10 px-5 sm:px-15 md:px-15 lg:px-30 pt-10 w-full">
                         <div className="flex gap-5 md:gap-15 w-full items-center">
                             <div className="shrink-0 w-30 h-30 md:w-40 md:h-40">
-                                <img src={`${user.userData.photo}`} alt="" className="w-30 h-30 md:w-40 md:h-40 rounded-full border-none object-cover"/>
+                                {user.userData.photo 
+                                    ? <img src={`${user.userData.photo}`} alt="" className="w-30 h-30 md:w-40 md:h-40 rounded-full border-none object-cover"/>
+                                    : <div className="flex justify-center items-center w-30 h-30 md:w-40 md:h-40 bg-neutral-400 rounded-full border-none object-cover">
+                                        <FontAwesomeIcon icon={faUser} className="text-6xl md:text-7xl" />
+                                      </div>
+                                }
                                 <Button onClick={() => navigate("/app/edit")} className="absolute hidden md:block translate-x-[28px] translate-y-[-30px] bg-blue-300">Edit Profile</Button>
                             </div>
                             <div className="flex flex-row justify-between w-full">

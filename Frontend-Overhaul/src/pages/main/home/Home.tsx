@@ -1,7 +1,7 @@
 import type { fetchPostType } from "@/types/fetchPostType"
 import { useLoaderData } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faUser } from "@fortawesome/free-solid-svg-icons"
 // import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons"
 import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons"
 import ContentStatistics from "@/components/content-statistics"
@@ -29,7 +29,12 @@ function Home() {
             {posts.status === "ok" ? posts[0].map((post) => (
                 <div className="w-full">
                     <div className="flex flex-row items-center gap-2 md:gap-3 border-b-1 p-2 w-full pb-3">
-                        <img src={`${post.pengguna.photo}`} alt="" className="rounded-full h10 w-9 md:w-10 bg-white"/>
+                        {post.pengguna.photo 
+                            ? <img src={`${post.pengguna.photo}`} alt="" className="rounded-full h-10 w-10 bg-white"/>
+                            : <div className="flex justify-center items-center rounded-full h-10 w-10 bg-neutral-400 border-none object-cover">
+                                <FontAwesomeIcon icon={faUser} className="text-lg" />
+                            </div>
+                        }
                         <div>
                             <p className="font-medium text-md sm:text-lg tracking-wide">{post.pengguna.username}</p>
                             <p className="font-light text-sm sm:text-md text-neutral-400">{post.created_at}</p>
