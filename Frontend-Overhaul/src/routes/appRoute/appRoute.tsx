@@ -1,3 +1,4 @@
+import FollowersCard from "@/components/followers-card";
 import checkAuth from "@/loader/check";
 import fetchOtherProfile from "@/loader/fetchOtherProfile";
 import fetchPost from "@/loader/fetchPost";
@@ -19,11 +20,11 @@ const appRoute = {
     children: [
         { index: true, loader: fetchPost, element: <Home /> },
         { path: "search", element: <Search /> },
-        { path: "profile", loader: fetchProfile, element: <Profile />},
+        { path: "profile", loader: fetchProfile, element: <Profile /> },
         { path: "post", element: <Post />},
         { path: "settings", element: <SettingsPage /> },
         { path: "edit", loader: fetchProfile, element: <EditProfile /> },
-        {path: ":id", loader: fetchOtherProfile, element: <OtherProfile />}
+        { path: ":id", loader: fetchOtherProfile, element: <OtherProfile /> }
     ]
 }
 

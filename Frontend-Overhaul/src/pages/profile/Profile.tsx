@@ -1,20 +1,26 @@
 import { Button } from "@/components/ui/button"
 import type { fetchedProfile } from "@/types/fetchProfileType"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useLoaderData, useNavigate } from "react-router-dom"
+import { Outlet, useLoaderData, useNavigate } from "react-router-dom"
 import { faFaceSmile, faHeartCrack, faUser, faUserPen } from "@fortawesome/free-solid-svg-icons"
 import ContentStatistics from "@/components/content-statistics"
+import FollowersCard from "@/components/followers-card"
+import { Card, CardHeader } from "@/components/ui/card"
+import { useState } from "react"
+import { AnimatePresence, motion } from "motion/react"
 
 function Profile() {
     const user = useLoaderData() as fetchedProfile
     const navigate = useNavigate()
+
+    const [ isFollowersCardOpen, setIsFollowersCardOpen ] = useState<boolean>(false)
 
     const likePost = async (id: number) => {
         console.log(id)
     }
 
     return (
-        <div className="lg:w-[85%]">
+        <div className="relative lg:w-[85%]">
             {user === null ? 
                 <div className="mt-5">
                     <p className="font-light text-center text-md text-neutral-200">Data Error, check your internet connection...</p>
@@ -41,7 +47,10 @@ function Profile() {
                                         </div>
                                         <div className="hidden sm:flex flex-row gap-7">
                                             <p className="font-light"><span className="font-medium">{user.following} </span>Following</p>
-                                            <p className="font-light"><span className="font-medium">{user.follower} </span>Followers</p>
+                                            <p 
+                                                className="font-light"
+                                                onClick={() => setIsFollowersCardOpen(true)}
+                                            ><span className="font-medium">{user.follower} </span>Followers</p>
                                             <p className="font-light"><span className="font-medium">1 </span>Posts</p>
                                         </div>
                                         <div className="hidden md:block">
@@ -56,7 +65,10 @@ function Profile() {
                         </div>
                         <div className="flex sm:hidden flex-row gap-7">
                             <p className="font-light"><span className="font-medium">{user.following} </span>Following</p>
-                            <p className="font-light"><span className="font-medium">{user.follower} </span>Followers</p>
+                            <p 
+                                className="font-light"
+                                onClick={() => setIsFollowersCardOpen(true)}
+                            ><span className="font-medium">{user.follower} </span>Followers</p>
                             <p className="font-light"><span className="font-medium">1 </span>Posts</p>
                         </div>
                         <div className="md:hidden">
@@ -99,7 +111,29 @@ function Profile() {
                             }
                         </div>
                     </div>
-                </div>}
+                    <AnimatePresence >
+                        {isFollowersCardOpen 
+                            ? 
+                            <div className="fixed left-0 top-0 flex items-center justify-center w-screen h-screen" onClick={(e) => {setIsFollowersCardOpen(false); e.stopPropagation()}}>
+                                <motion.div
+                                    style={{ transformOrigin: "center" }}
+                                    initial = {{
+                                        opacity: 0,
+                                        scale: 1.1
+                                    }}
+                                    animate = {{
+                                        opacity: 100,
+                                        scale: 1
+                                    }}
+                                >
+                                    <FollowersCard />
+                                </motion.div>
+                            </div>
+                            : 
+                            null}
+                    </AnimatePresence>
+                </div>
+            }
         </div>
     )
 }
