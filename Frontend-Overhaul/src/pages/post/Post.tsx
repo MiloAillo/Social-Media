@@ -1,11 +1,15 @@
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import ApiUrl from "@/lib/api"
 import { faCamera } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { zodResolver } from "@hookform/resolvers/zod"
+import axios, { isAxiosError } from "axios"
 import { useForm } from "react-hook-form"
 import z from "zod"
 
 function Post() {
+    // const form
+    const formData = new FormData()
 
     const postSchema = z.object({
         tittle: z.string().min(8).max(200),
@@ -23,6 +27,28 @@ function Post() {
     
     const post = async (values: z.infer<typeof postSchema>) => {
         console.log(values)
+        try {
+            formData.append("tittle", values.tittle)
+            formData.append("content", values.content)
+            
+            const res = axios.post(`${ApiUrl}/api/post`, formData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("Authorization")}`,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })
+            const data = (await res).data
+            console.log(data)
+        } catch(err) {
+            if(isAxiosError(err)) {
+                console.log(err.response)
+            }
+        } finally {
+            formData.delete("tittle")
+            formData.delete("content")
+            formData.delete("images")
+        }
     }
 
     return (
