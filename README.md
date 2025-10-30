@@ -93,7 +93,15 @@ you can zoom in, its an SVG format :3c
 ![Signup Light Mode](documentation/lSignup.png)
 <br>
 ![Signup Dark Mode](documentation/dSignup.png)
-<i>Note: Updates from Sep, 28 2025. layout and design are not final, changes will be made.</i>
+<br>
+![Homepage](documentation/homepage.png)
+<br>
+![Search Page](documentation/searchpage.png)
+<br>
+![Profile Page](documentation/profilepage.png)
+<br>
+![Edit Profile](documentation/editpage.png)
+<i>Note: Updates from Oct, 30 2025. layout and design are not final, changes will be made.</i>
 <br>
 ## Tech Stack
 <ol>
