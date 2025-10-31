@@ -14,7 +14,7 @@ function Post() {
     const postSchema = z.object({
         tittle: z.string().min(8).max(200),
         content: z.string().min(10).max(1256),
-        image: z.file().optional()
+        images: z.any().optional()
     })
 
     const form = useForm<z.infer<typeof postSchema>>({
@@ -27,28 +27,31 @@ function Post() {
     
     const post = async (values: z.infer<typeof postSchema>) => {
         console.log(values)
-        try {
-            formData.append("tittle", values.tittle)
-            formData.append("content", values.content)
-            
-            const res = axios.post(`${ApiUrl}/api/post`, formData, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("Authorization")}`,
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                }
-            })
-            const data = (await res).data
-            console.log(data)
-        } catch(err) {
-            if(isAxiosError(err)) {
-                console.log(err.response)
-            }
-        } finally {
-            formData.delete("tittle")
-            formData.delete("content")
-            formData.delete("images")
+        if (values.images.length > 3) {
+            console.log("no")
         }
+        // try {
+        //     formData.append("tittle", values.tittle)
+        //     formData.append("content", values.content)
+            
+        //     const res = axios.post(`${ApiUrl}/api/post`, formData, {
+        //         headers: {
+        //             Authorization: `Bearer ${localStorage.getItem("Authorization")}`,
+        //             "Content-Type": "application/json",
+        //             "Accept": "application/json"
+        //         }
+        //     })
+        //     const data = (await res).data
+        //     console.log(data)
+        // } catch(err) {
+        //     if(isAxiosError(err)) {
+        //         console.log(err.response)
+        //     }
+        // } finally {
+        //     formData.delete("tittle")
+        //     formData.delete("content")
+        //     formData.delete("images")
+        // }
     }
 
     return (
@@ -61,10 +64,28 @@ function Post() {
                     <FormItem>
                         <div className="w-full h-11 sm:h-14 bg-[#00000062] border-b-2 border-[#8d8d8d] flex flex-row items-center justify-between px-3 gap-2">
                             <input {...field} type="text" placeholder="What's up?" className="h-full flex-1 text-white font-semibold text-md sm:text-lg lg:text-xl focus:outline-0"/>
-                            <FontAwesomeIcon icon={faCamera} color="white" className="text-xl sm:text-2xl w-full h-full"/>
+                            <FontAwesomeIcon icon={faCamera} onClick={() => document.getElementById("image")?.click()} color="white" className="text-xl sm:text-2xl w-full h-full"/>
                         </div>
                         <FormMessage />
                     </FormItem>
+                )}
+                />
+                <FormField
+                control={form.control}
+                name="images"
+                render={({ field }) => (
+                    <div>
+                        <input
+                            id="image" 
+                            type="file" 
+                            className="hidden"
+                            multiple
+                            onChange={(e) => field.onChange(e.target.files)}
+                            ref={field.ref}
+                            accept="image/png, image/jpeg, image/jpg"
+                        ></input>
+                        <FormMessage/>
+                    </div>
                 )}
                 />
                 <FormField

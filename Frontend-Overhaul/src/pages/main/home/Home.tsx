@@ -28,7 +28,7 @@ function Home() {
         <div>
             {posts.status === "ok" ? posts[0].map((post) => (
                 <div className="w-full">
-                    <div className="flex flex-row items-center gap-2 md:gap-3 border-b-1 p-2 w-full pb-3">
+                    <div className="flex border-neutral-600 flex-row items-center gap-2 md:gap-3 border-b-1 p-2 w-full pb-3">
                         {post.pengguna.photo 
                             ? <img src={`${post.pengguna.photo}`} alt="" className="rounded-full h-10 w-10 bg-white"/>
                             : <div className="flex justify-center items-center rounded-full h-10 w-10 bg-neutral-400 border-none object-cover">
@@ -49,7 +49,6 @@ function Home() {
                         </div> : null}
                         <p className="font-bold text-lg md:text-2xl my-1">{post.tittle}</p>
                         <p className="font-light text-md md:text-lg">{post.short_content}</p> 
-                        {/* IM DONE FOR NOW, NEXT IS ADDING TITTLE AND STUFF SO IT MATCH THE BACKEND RESPONSE */}
                     </div>
                     <ContentStatistics likes_count={post.likes_count} comments_count={post.comments_count} likePost={likePost} />
                 </div>
