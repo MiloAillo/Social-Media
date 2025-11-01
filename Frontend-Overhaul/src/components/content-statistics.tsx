@@ -7,6 +7,8 @@ type postData = {
     likes_count: number
     comments_count: number
     likePost: (id: number) => void
+    // userLiked: boolean
+    // ==[same as the followers, you need to add boolean stating the user has like or not, so the calculation not always assumed that the user never like the post before]==
 }
 
 const ContentStatistics = ({ likes_count, comments_count }: postData) => {

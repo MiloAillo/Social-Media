@@ -1,6 +1,6 @@
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import ApiUrl from "@/lib/api"
-import { faCamera } from "@fortawesome/free-solid-svg-icons"
+import { faCamera, faCheck } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios, { isAxiosError } from "axios"
@@ -14,6 +14,8 @@ function Post() {
     const [previewUrls, setPreviewUrls] = useState<string[]>([])
     const [imageOverWarning, setImageOverWarning] = useState<boolean>(false)
     const [imageFakeWarning, setImageFakeWarning] = useState<boolean>(false)
+    const [isPostSuccess, setIsPostSuccess] = useState<boolean>(false)
+    const [isPostFailed, setIsPostFailed] = useState<boolean>(false)
     const [images, setImages] = useState<boolean>(false)
     // const form
     const formData = new FormData()
@@ -34,6 +36,8 @@ function Post() {
     
     const post = async (values: z.infer<typeof postSchema>) => {
         console.log(values.images)
+        setIsPostSuccess(false)
+        setIsPostFailed(false)
         try {
             formData.append("tittle", values.tittle)
             formData.append("content", values.content)
@@ -51,10 +55,11 @@ function Post() {
                 }
             })
             const data = (await res).data
-            console.log(data)
+            if(data.status === "success") setIsPostSuccess(true) 
         } catch(err) {
             if(isAxiosError(err)) {
                 console.log(err.response)
+                setIsPostFailed(true)
             }
         } finally {
             formData.delete("tittle")
@@ -199,6 +204,46 @@ function Post() {
                     </FormItem>
                 )}
                 />
+                { isPostSuccess ? 
+                    <motion.div 
+                        className="flex gap-1 items-center justify-end px-2"
+                        initial = {{
+                            opacity: 0,
+                            y: -3,
+                            filter: "blur(5px)"
+                        }}
+                        animate = {{
+                            opacity: 100,
+                            y: 0,
+                            filter: "blur(0px)",
+                            transition: {
+                                duration: 0.2
+                            }
+                        }}
+                >
+                    <p className="mx-1 font-medium text-md">Post Uploaded Sucessfully!</p>
+                    <FontAwesomeIcon icon={faCheck} className="opacity-70" />
+                </motion.div> : null }
+                { isPostFailed ? 
+                    <motion.div 
+                        className="flex gap-1 items-center justify-end px-2"
+                        initial = {{
+                            opacity: 0,
+                            y: -3,
+                            filter: "blur(5px)"
+                        }}
+                        animate = {{
+                            opacity: 100,
+                            y: 0,
+                            filter: "blur(0px)",
+                            transition: {
+                                duration: 0.2
+                            }
+                        }}
+                >
+                    <p className="mx-1 font-medium text-md">Failed, please try again later.</p>
+                    <FontAwesomeIcon icon={faTriangleExclamation} className="opacity-70" />
+                </motion.div> : null }
                 <button type="submit" className="bg-blue-400 text-neutral-800 font-semibold tet-lg md:text-xl p-1 md:p-2 w-20 md:w-30 rounded-sm self-end tracking-wider">Post</button>
             </form>
         </Form>
