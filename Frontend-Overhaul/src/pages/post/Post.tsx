@@ -33,21 +33,20 @@ function Post() {
     })
     
     const post = async (values: z.infer<typeof postSchema>) => {
-        console.log(values)
+        console.log(values.images)
         try {
             formData.append("tittle", values.tittle)
             formData.append("content", values.content)
             if(values.images) {
                 for (let index = 0; index < values.images.length; index++) {
                     const image = values.images[index];
-                    
+                    formData.append("images[]", image)
                 }
             }
             
             const res = axios.post(`${ApiUrl}/api/post`, formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("Authorization")}`,
-                    "Content-Type": "application/json",
                     "Accept": "application/json"
                 }
             })
