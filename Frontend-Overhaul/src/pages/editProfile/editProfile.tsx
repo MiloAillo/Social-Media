@@ -122,7 +122,7 @@ const EditProfile = () => {
                         render={({ field }) => {
                             return (
                                 <FormItem>
-                                    <div className="flex flex-col border-1 px-3 py-2 rounded-lg">
+                                    <div className="flex flex-col border-2 px-3 py-2 rounded-lg">
                                         <FormLabel className="text-base sm:text-lg lg:text-xl text-neutral-400 font-light">Name</FormLabel>
                                         <FormControl>
                                                 <input {...field} className="flex-1 text-white font-medium text-base sm:text-lg lg:text-xl focus:outline-0"/>
@@ -139,7 +139,7 @@ const EditProfile = () => {
                         render={({ field }) => {
                             return (
                                 <FormItem>
-                                    <div className="flex flex-col border-1 px-3 py-2 rounded-lg">
+                                    <div className="flex flex-col border-2 px-3 py-2 rounded-lg">
                                         <FormLabel className="text-base sm:text-lg lg:text-xl text-neutral-400 font-light">Username</FormLabel>
                                         <FormControl>
                                                 <input {...field} className="flex-1 text-white font-medium text-base sm:text-lg lg:text-xl focus:outline-0"/>
@@ -156,7 +156,7 @@ const EditProfile = () => {
                         render={({ field }) => {
                             return (
                                 <FormItem>
-                                    <div className="grow flex flex-col border-1 px-3 py-2 rounded-lg">
+                                    <div className="grow flex flex-col border-2 px-3 py-2 rounded-lg">
                                         <FormLabel className="text-base sm:text-lg lg:text-xl text-neutral-400 font-light">Bio</FormLabel>
                                         <FormControl>
                                             <textarea 
