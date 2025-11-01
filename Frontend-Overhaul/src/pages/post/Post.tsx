@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import axios, { isAxiosError } from "axios"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import z, { map } from "zod"
+import z from "zod"
 import { motion } from "motion/react"
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons"
 
