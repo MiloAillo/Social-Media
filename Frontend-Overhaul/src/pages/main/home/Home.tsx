@@ -41,91 +41,90 @@ function Home() {
                         </div>
                     </div>
                     <div className="py-2 flex flex-col gap-2">
-                    {post.images && (
-                        <div>
-                            <div className="w-full hidden sm:flex gap-2 px-2">
-                            {post.images.map((image, i) => (
-                                <div
-                                key={i}
-                                className={`rounded-md overflow-hidden ${
-                                    post.images?.length === 1
-                                    ? "w-full h-64"
-                                    : post.images?.length === 2
-                                    ? "w-[49%] h-60"
-                                    : post.images?.length ?? 0 >= 3
-                                    ? "w-[32%] h-56"
-                                    : ""
-                                }`}
-                                style={{
-                                    backgroundImage: `url(${image})`,
-                                    backgroundSize: "cover",
-                                    backgroundPosition: "center",
-                                }}
-                                />
-                            ))}
-                            </div>
-                            {/* HARDCODED CURRENTLY BECAUSE IDK HOW LMAOAOAO */}
-                            {
-                                post.images.length == 3 
-                                ? (
-                                    <div className="w-full flex sm:hidden h-56 gap-2">
-                                        <div
-                                        className="rounded-md flex-1 h-full overflow-hidden"
-                                        style={{
-                                            backgroundImage: `url(${post.images[0]})`,
-                                            backgroundSize: "cover",
-                                            backgroundPosition: "center",
-                                        }}
-                                        />
-                                        <div className="flex-1 flex flex-col gap-2 w-[49%] h-full">
-                                            <div 
-                                                className="rounded-md h-full overflow-hidden"
-                                                style={{
-                                                    backgroundImage: `url(${post.images[1]})`,
-                                                    backgroundSize: "cover",
-                                                    backgroundPosition: "center",
-                                                }}
-                                            />
-                                            <div 
-                                                className="rounded-md h-full overflow-hidden"
-                                                style={{
-                                                    backgroundImage: `url(${post.images[2]})`,
-                                                    backgroundSize: "cover",
-                                                    backgroundPosition: "center",
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                  )
-                                : (
-                                    <div className="w-full flex sm:hidden gap-2 px-2">
-                                        {post.images.map((image, i) => (
+                        {post.images && (
+                            <div>
+                                <div className="w-full hidden sm:flex gap-2 px-2">
+                                {post.images.map((image, i) => (
+                                    <div
+                                    key={i}
+                                    className={`rounded-md overflow-hidden ${
+                                        post.images?.length === 1
+                                        ? "w-full h-64"
+                                        : post.images?.length === 2
+                                        ? "w-[49%] h-60"
+                                        : post.images?.length ?? 0 >= 3
+                                        ? "w-[32%] h-56"
+                                        : ""
+                                    }`}
+                                    style={{
+                                        backgroundImage: `url(${image})`,
+                                        backgroundSize: "cover",
+                                        backgroundPosition: "center",
+                                    }}
+                                    />
+                                ))}
+                                </div>
+                                {/* HARDCODED CURRENTLY BECAUSE IDK HOW LMAOAOAO */}
+                                {
+                                    post.images.length == 3 
+                                    ? (
+                                        <div className="w-full flex sm:hidden h-56 gap-2">
                                             <div
-                                            key={i}
-                                            className={`rounded-md overflow-hidden ${
-                                                post.images?.length === 1
-                                                ? "w-full h-64"
-                                                : post.images?.length === 2
-                                                ? "w-[49%] h-60"
-                                                : post.images?.length ?? 0 >= 3
-                                                ? "w-[32%] h-56"
-                                                : ""
-                                            }`}
+                                            className="rounded-md flex-1 h-full overflow-hidden"
                                             style={{
-                                                backgroundImage: `url(${image})`,
+                                                backgroundImage: `url(${post.images[0]})`,
                                                 backgroundSize: "cover",
                                                 backgroundPosition: "center",
                                             }}
                                             />
-                                        ))}
-                                    </div>
-                                )
-                            }
-                        </div>
-                    )}
-
-                    <p className="font-bold text-lg md:text-2xl my-1 px-5">{post.tittle}</p>
-                    <p className="font-light text-md md:text-lg px-5">{post.short_content}</p>
+                                            <div className="flex-1 flex flex-col gap-2 w-[49%] h-full">
+                                                <div 
+                                                    className="rounded-md h-full overflow-hidden"
+                                                    style={{
+                                                        backgroundImage: `url(${post.images[1]})`,
+                                                        backgroundSize: "cover",
+                                                        backgroundPosition: "center",
+                                                    }}
+                                                />
+                                                <div 
+                                                    className="rounded-md h-full overflow-hidden"
+                                                    style={{
+                                                        backgroundImage: `url(${post.images[2]})`,
+                                                        backgroundSize: "cover",
+                                                        backgroundPosition: "center",
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    )
+                                    : (
+                                        <div className="w-full flex sm:hidden gap-2 px-2">
+                                            {post.images.map((image, i) => (
+                                                <div
+                                                key={i}
+                                                className={`rounded-md overflow-hidden ${
+                                                    post.images?.length === 1
+                                                    ? "w-full h-64"
+                                                    : post.images?.length === 2
+                                                    ? "w-[49%] h-60"
+                                                    : post.images?.length ?? 0 >= 3
+                                                    ? "w-[32%] h-56"
+                                                    : ""
+                                                }`}
+                                                style={{
+                                                    backgroundImage: `url(${image})`,
+                                                    backgroundSize: "cover",
+                                                    backgroundPosition: "center",
+                                                }}
+                                                />
+                                            ))}
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        )}
+                        <p className="font-bold text-lg md:text-2xl my-1 px-5">{post.tittle}</p>
+                        <p className="font-light text-md md:text-lg px-5">{post.short_content}</p>
                     </div>
 
                     <ContentStatistics likes_count={post.likes_count} comments_count={post.comments_count} likePost={likePost} />

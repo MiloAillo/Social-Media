@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button"
 import type { fetchedProfile } from "@/types/fetchProfileType"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Outlet, useLoaderData, useNavigate } from "react-router-dom"
-import { faFaceSmile, faHeartCrack, faUser, faUserPen } from "@fortawesome/free-solid-svg-icons"
+import { useLoaderData, useNavigate } from "react-router-dom"
+import { faFaceSmile, faUser, faUserPen } from "@fortawesome/free-solid-svg-icons"
 import ContentStatistics from "@/components/content-statistics"
 import FollowersCard from "@/components/followers-card"
-import { Card, CardHeader } from "@/components/ui/card"
 import { useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
 
@@ -85,18 +84,90 @@ function Profile() {
                                         </div>
                                     </div>
                                     <div className="py-2 flex flex-col gap-2">
-                                        {konten.images ? <div className="flex px-2 flex-wrap gap-5 w-full h-30 md:h-45 overflow-y-hidden">
-                                            {konten.images?.map((image) => { 
-                                                return (
-                                                <div className="flex-1 w-full"><img src={`${image}`} alt="" className="w-full h-full"/></div>
-                                            )})}
-                                        </div> : null}
-                                        <div>
-                                            <p className="text-neutral-400 px-4">{konten.created_at}</p>
-                                            <p className="font-bold text-lg md:text-2xl my-1 px-4">{konten.tittle}</p>
+                        {konten.images && (
+                            <div>
+                                <div className="w-full hidden sm:flex gap-2 px-2">
+                                {konten.images.map((image, i) => (
+                                    <div
+                                    key={i}
+                                    className={`rounded-md overflow-hidden ${
+                                        konten.images?.length === 1
+                                        ? "w-full h-64"
+                                        : konten.images?.length === 2
+                                        ? "w-[49%] h-60"
+                                        : konten.images?.length ?? 0 >= 3
+                                        ? "w-[32%] h-56"
+                                        : ""
+                                    }`}
+                                    style={{
+                                        backgroundImage: `url(${image})`,
+                                        backgroundSize: "cover",
+                                        backgroundPosition: "center",
+                                    }}
+                                    />
+                                ))}
+                                </div>
+                                {/* HARDCODED CURRENTLY BECAUSE IDK HOW LMAOAOAO */}
+                                {
+                                    konten.images.length == 3 
+                                    ? (
+                                        <div className="w-full flex sm:hidden h-56 gap-2">
+                                            <div
+                                            className="rounded-md flex-1 h-full overflow-hidden"
+                                            style={{
+                                                backgroundImage: `url(${konten.images[0]})`,
+                                                backgroundSize: "cover",
+                                                backgroundPosition: "center",
+                                            }}
+                                            />
+                                            <div className="flex-1 flex flex-col gap-2 w-[49%] h-full">
+                                                <div 
+                                                    className="rounded-md h-full overflow-hidden"
+                                                    style={{
+                                                        backgroundImage: `url(${konten.images[1]})`,
+                                                        backgroundSize: "cover",
+                                                        backgroundPosition: "center",
+                                                    }}
+                                                />
+                                                <div 
+                                                    className="rounded-md h-full overflow-hidden"
+                                                    style={{
+                                                        backgroundImage: `url(${konten.images[2]})`,
+                                                        backgroundSize: "cover",
+                                                        backgroundPosition: "center",
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
-                                        <p className="font-light text-md md:text-lg px-4">{konten.short_content}</p> 
-                                        {/* IM DONE FOR NOW, NEXT IS ADDING TITTLE AND STUFF SO IT MATCH THE BACKEND RESPONSE */}
+                                    )
+                                    : (
+                                        <div className="w-full flex sm:hidden gap-2 px-2">
+                                            {konten.images.map((image, i) => (
+                                                <div
+                                                key={i}
+                                                className={`rounded-md overflow-hidden ${
+                                                    konten.images?.length === 1
+                                                    ? "w-full h-64"
+                                                    : konten.images?.length === 2
+                                                    ? "w-[49%] h-60"
+                                                    : konten.images?.length ?? 0 >= 3
+                                                    ? "w-[32%] h-56"
+                                                    : ""
+                                                }`}
+                                                style={{
+                                                    backgroundImage: `url(${image})`,
+                                                    backgroundSize: "cover",
+                                                    backgroundPosition: "center",
+                                                }}
+                                                />
+                                            ))}
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        )}
+                        <p className="font-bold text-lg md:text-2xl my-1 px-5">{konten.tittle}</p>
+                        <p className="font-light text-md md:text-lg px-5">{konten.short_content}</p>
                                     </div>
                                     <div className="w-full h-fit pt-3 sm:pt-0">
                                         <ContentStatistics likes_count={konten.likes_count} comments_count={konten.comments_count} likePost={likePost} />
