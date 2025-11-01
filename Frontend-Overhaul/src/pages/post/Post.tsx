@@ -34,28 +34,34 @@ function Post() {
     
     const post = async (values: z.infer<typeof postSchema>) => {
         console.log(values)
-        // try {
-        //     formData.append("tittle", values.tittle)
-        //     formData.append("content", values.content)
+        try {
+            formData.append("tittle", values.tittle)
+            formData.append("content", values.content)
+            if(values.images) {
+                for (let index = 0; index < values.images.length; index++) {
+                    const image = values.images[index];
+                    
+                }
+            }
             
-        //     const res = axios.post(`${ApiUrl}/api/post`, formData, {
-        //         headers: {
-        //             Authorization: `Bearer ${localStorage.getItem("Authorization")}`,
-        //             "Content-Type": "application/json",
-        //             "Accept": "application/json"
-        //         }
-        //     })
-        //     const data = (await res).data
-        //     console.log(data)
-        // } catch(err) {
-        //     if(isAxiosError(err)) {
-        //         console.log(err.response)
-        //     }
-        // } finally {
-        //     formData.delete("tittle")
-        //     formData.delete("content")
-        //     formData.delete("images")
-        // }
+            const res = axios.post(`${ApiUrl}/api/post`, formData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("Authorization")}`,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })
+            const data = (await res).data
+            console.log(data)
+        } catch(err) {
+            if(isAxiosError(err)) {
+                console.log(err.response)
+            }
+        } finally {
+            formData.delete("tittle")
+            formData.delete("content")
+            formData.delete("images[]")
+        }
     }
 
     return (
