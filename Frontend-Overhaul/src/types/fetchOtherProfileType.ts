@@ -6,7 +6,7 @@ type userData = {
     username: string
 }
 
-type images = [string] | null
+type images = string[] | null
 
 type kontenData = {
     comments_count: number
