@@ -1,5 +1,5 @@
 import type { fetchPostType } from "@/types/fetchPostType"
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars, faUser } from "@fortawesome/free-solid-svg-icons"
 // import { faHeart, faComment } from "@fortawesome/free-solid-svg-icons"
@@ -8,6 +8,7 @@ import ContentStatistics from "@/components/content-statistics"
 
 function Home() {
     const posts = useLoaderData() as fetchPostType
+    const navigate = useNavigate()
 
     const likePost = async (id: number) => {
         console.log(id)
@@ -28,7 +29,10 @@ function Home() {
         <div className="w-full">
             {posts.status === "ok" ? posts[0].map((post) => (
                 <div className="w-full">
-                    <div className="flex border-neutral-800 flex-row items-center gap-2 md:gap-3 border-t-2 p-4 w-full pb-3">
+                    <div 
+                        className="flex border-neutral-800 flex-row items-center gap-2 md:gap-3 border-t-2 p-4 w-full pb-3"
+                        onClick={() => {navigate(`/app/${post.pengguna.id}`)}}
+                    >
                         {post.pengguna.photo 
                             ? <img src={`${post.pengguna.photo}`} alt="" className="rounded-full h-10 w-10 bg-white"/>
                             : <div className="flex justify-center items-center rounded-full h-10 w-10 bg-neutral-400 border-none object-cover">
