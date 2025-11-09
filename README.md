@@ -1,4 +1,5 @@
 # Social Media
+<b>[Halted, Currently in Development of MyFinance (Another "More Important" School Project)]</b> <br> <br>
 Originally created as a school assignment and turned to be a full blown project.
 <br>
 This repo contains a full-blown CRUD application with a Laravel API service and React, designed with scalable source code to make adopting new technologies easier, such as improved security measures.
